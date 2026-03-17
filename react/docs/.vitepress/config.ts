@@ -4,7 +4,7 @@ import { withMermaid } from 'vitepress-plugin-mermaid'
 export default withMermaid(defineConfig({
   title: 'React 19 源码深度解析',
   description: 'React 19 核心源码架构与实现原理中文解析',
-  base: '/react/',
+  base: '/source-deepdive-wiki/react/',
   lang: 'zh-CN',
   
   head: [
