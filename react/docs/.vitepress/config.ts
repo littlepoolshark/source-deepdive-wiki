@@ -15,6 +15,13 @@ export default withMermaid(defineConfig({
     // Mermaid configuration
   },
 
+  ignoreDeadLinks: [
+    /^\.\/fixtures\//,
+    /^\.\/packages\//,
+    /^\.\/scripts\//,
+    /^\.\/yarn\.lock$/
+  ],
+
   themeConfig: {
     logo: '/react-icon.svg',
     
