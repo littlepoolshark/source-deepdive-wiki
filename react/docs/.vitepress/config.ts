@@ -12,7 +12,15 @@ export default withMermaid(defineConfig({
   ],
 
   mermaid: {
-    // Mermaid configuration
+    flowchart: {
+      padding: 20,
+      nodeSpacing: 50,
+      rankSpacing: 50,
+      useMaxWidth: true
+    },
+    themeVariables: {
+      nodePadding: 15
+    }
   },
 
   ignoreDeadLinks: [

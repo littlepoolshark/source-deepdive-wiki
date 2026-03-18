@@ -1,0 +1,60 @@
+/* Fix Mermaid diagram text truncation */
+.mermaid {
+  padding: 20px 0;
+  overflow: visible !important;
+}
+
+.mermaid svg {
+  max-width: 100%;
+  overflow: visible !important;
+}
+
+/* Ensure mermaid container has enough space */
+.vp-doc .mermaid {
+  margin: 16px 0;
+  padding: 20px;
+  background: var(--vp-c-bg-soft);
+  border-radius: 8px;
+}
+
+/* Fix node text clipping in flowcharts */
+.mermaid .node rect,
+.mermaid .node circle,
+.mermaid .node ellipse,
+.mermaid .node polygon,
+.mermaid .node path {
+  overflow: visible;
+}
+
+.mermaid .nodeLabel {
+  overflow: visible !important;
+}
+
+/* Ensure edge labels are visible */
+.mermaid .edgeLabel {
+  overflow: visible !important;
+}
+
+/* Fix foreignObject clipping issues */
+.mermaid foreignObject {
+  overflow: visible !important;
+}
+
+.mermaid foreignObject div {
+  overflow: visible !important;
+}
+
+/* Increase node padding to prevent text clipping */
+.mermaid .node .label {
+  padding: 8px !important;
+}
+
+/* Fix flowchart node sizing */
+.mermaid .flowchart-label {
+  overflow: visible !important;
+  text-overflow: clip !important;
+}
+
+.mermaid .label-container {
+  overflow: visible !important;
+}
