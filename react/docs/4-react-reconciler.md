@@ -169,6 +169,8 @@ graph LR
 
 Work Loop（工作循环）是协调器的核心，管理 render phase 和 commit phase 的推进过程。
 
+<!-- > 个人理解， work loop 只是管理 render phase，commitRoot()在 work loop 范畴之外 -->
+
 ```mermaid
 graph TB
     Start["scheduleUpdateOnFiber()<br/>ReactFiberWorkLoop.js:916<br/><br/>"]
@@ -224,12 +226,22 @@ graph TB
 
 ### Render Phase（渲染阶段）
 
-Render phase 遍历 Fiber 树并确定需要进行的更改。它包含两个子阶段：
+Render phase 本质上是一个计算下一个 fiber 节点的计算过程，目的就是构建出一颗新的完整的 fiber tree（work-in-progress）。计算公式为：`next fiber = reconcileChildren（prev fiber, next react element children）`。而这个过程中所产生的非纯计算类的事务我们称之为「副作用」。
+
+从另外的一个角度看，这是一个深度优先递归遍历的过程：
+
+> 注意，遍历的对象是 react element tree；而 diff 的对象 curren fiber tree。
+
+- **递** - 递出去的时候对每一个经过的 fiber 节点调用 `beginWork()`;
+- 当触碰到整颗 react element tree 的叶子节点时候，就开始「归」；
+- **归** - 归回来的时候对每一个经过的 fiber 节点调用 `completeWork()`
+
+因此我们也常说，Render phase 包含两个子阶段：
 
 **Begin Work**（[ReactFiberBeginWork.js:1400-2900]()）：
 
-- 处理组件（调用 render、hooks 等）
-- 使用 `reconcileChildren` 协调子节点
+- 渲染组件（调用组件的 render 方法 ）
+- 使用 `reconcileChildren` 协调得到子 fiber 节点
 - 返回下一个要处理的子 fiber
 - 关键函数：`updateFunctionComponent`、`updateClassComponent`、`updateHostComponent`
 
@@ -239,7 +251,19 @@ Render phase 遍历 Fiber 树并确定需要进行的更改。它包含两个子
 - 从子节点向上冒泡副作用标志
 - 返回到父节点，然后处理兄弟节点
 
-在并发模式下，render phase 是**可中断的**——`shouldYield()` 允许暂停以处理更高优先级的工作。
+在并发模式下，render phase 是**可中断的**—— 比如调用`shouldYield()` 来把主线程的控制权让渡出去，实现渲染工作的暂停以处理更高优先级的工作。这就引出了 work loop 的两个模式：同步版本和并发版本：
+
+- 同步版本： `workLoopSync()`;
+- 并发版本： 有两个实现，分别是： `workLoopConcurrent()` 和 `workLoopConcurrentByScheduler()`
+
+其实，work loop 的核心框架就是两重嵌套的 while 循环：
+
+- 外层 while 循环在上面的 `workLoopXxx()`里面；
+- 内层 while 循环在 `completeUnitOfWork()` 函数实现里面；
+
+外层 while 循环负责实现「**递出去**」，内层 while 循环负责「**归回来**」。当 workInProgress 重新指向 FiberRoot 的时候，整个渲染过程就完成了。
+
+React Reconciler 就是通过这两层 while 循环实现了对 react element tree 的深度优先递归遍历。
 
 ### Commit Phase（提交阶段）
 
@@ -944,7 +968,7 @@ React Reconciler（协调器）是核心协调引擎，它：
 
 - **管理 Fiber 树**：带有 `current` 和 `workInProgress` 的双缓冲树
 - **协调渲染阶段**：可中断的 render phase，同步的 commit phase
-- **抽象平台**：通过 `ReactFiberConfig` 接口委托宿主操作
+- **抽象平台**：通过 `ReactFiberConfig` 接口将实例操作（增，删，改）委托给宿主来实现
 - **调度工作**：使用 lanes 和 Scheduler 进行基于优先级的调度
 - **处理更新**：批处理更新，处理更新队列，协调子节点
 - **支持特性**：Hooks、Context、Suspense、Error Boundaries、Concurrent Rendering
