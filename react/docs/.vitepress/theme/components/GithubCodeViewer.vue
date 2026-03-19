@@ -1,14 +1,23 @@
 <script setup lang="ts">
-import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useGithubCode } from '../composables/useGithubCode'
 
-const { state, close, toggleMode, displayedCode, lineNumbers } = useGithubCode()
+const { state, close, toggleMode, displayedCode, lineNumbers, isLineHighlighted } = useGithubCode()
+
+// Reference to the code content container for scrolling
+const codeContentRef = ref<HTMLElement | null>(null)
 
 // Drag state for modal
 const isDragging = ref(false)
 const dragOffset = ref({ x: 0, y: 0 })
 const modalPosition = ref({ x: 0, y: 0 })
 const modalRef = ref<HTMLElement | null>(null)
+
+// Drawer resize state
+const isResizing = ref(false)
+const drawerWidth = ref(800) // Will be updated on mount
+const MIN_DRAWER_WIDTH = 300
+const MAX_DRAWER_WIDTH_RATIO = 0.8
 
 const fileName = computed(() => {
   const parts = state.value.filePath.split('/')
@@ -30,6 +39,7 @@ const handleKeydown = (e: KeyboardEvent) => {
     close()
   }
 }
+
 
 // Drag handlers for modal
 const startDrag = (e: MouseEvent) => {
@@ -68,6 +78,75 @@ const stopDrag = () => {
   document.removeEventListener('mouseup', stopDrag)
 }
 
+// Resize handlers for drawer
+let rafId: number | null = null
+let pendingWidth: number | null = null
+let savedScrollY = 0
+
+const startResize = (e: MouseEvent) => {
+  if (state.value.mode !== 'drawer') return
+  
+  e.preventDefault()
+  isResizing.value = true
+  savedScrollY = window.scrollY
+  
+  document.addEventListener('mousemove', onResize)
+  document.addEventListener('mouseup', stopResize)
+}
+
+const applyResize = () => {
+  if (pendingWidth === null || typeof window === 'undefined') return
+  
+  drawerWidth.value = pendingWidth
+  updateDrawerWidthVar()
+  
+  // Force synchronous layout calculation then restore scroll
+  document.body.offsetHeight
+  window.scrollTo(0, savedScrollY)
+  
+  pendingWidth = null
+  rafId = null
+}
+
+const onResize = (e: MouseEvent) => {
+  if (!isResizing.value || typeof window === 'undefined') return
+  
+  const maxWidth = window.innerWidth * MAX_DRAWER_WIDTH_RATIO
+  const newWidth = window.innerWidth - e.clientX
+  pendingWidth = Math.max(MIN_DRAWER_WIDTH, Math.min(newWidth, maxWidth))
+  
+  // Batch updates using requestAnimationFrame
+  if (rafId === null) {
+    rafId = requestAnimationFrame(applyResize)
+  }
+}
+
+const stopResize = () => {
+  // Cancel any pending RAF
+  if (rafId !== null) {
+    cancelAnimationFrame(rafId)
+    rafId = null
+  }
+  
+  // Apply final width if pending
+  if (pendingWidth !== null) {
+    drawerWidth.value = pendingWidth
+    updateDrawerWidthVar()
+    pendingWidth = null
+  }
+  
+  // Final scroll restore
+  window.scrollTo(0, savedScrollY)
+  
+  isResizing.value = false
+  document.removeEventListener('mousemove', onResize)
+  document.removeEventListener('mouseup', stopResize)
+}
+
+const updateDrawerWidthVar = () => {
+  document.documentElement.style.setProperty('--github-viewer-drawer-width', `${drawerWidth.value}px`)
+}
+
 const modalStyle = computed(() => {
   if (state.value.mode !== 'modal') return {}
   
@@ -87,6 +166,13 @@ const modalStyle = computed(() => {
   }
 })
 
+const drawerStyle = computed(() => {
+  if (state.value.mode !== 'drawer') return {}
+  return {
+    width: `${drawerWidth.value}px`
+  }
+})
+
 // Reset modal position when switching modes or reopening
 watch(() => [state.value.isOpen, state.value.mode], () => {
   if (state.value.mode === 'modal') {
@@ -94,27 +180,52 @@ watch(() => [state.value.isOpen, state.value.mode], () => {
   }
 })
 
-// Handle body class for drawer mode (to push content)
-watch(() => state.value.isOpen, (isOpen) => {
-  if (isOpen && state.value.mode === 'drawer') {
-    document.body.classList.add('github-viewer-drawer-open')
-  } else {
-    document.body.classList.remove('github-viewer-drawer-open')
+// Scroll to highlighted line when code is loaded
+watch(() => state.value.isLoading, (isLoading, wasLoading) => {
+  if (wasLoading && !isLoading && state.value.code && state.value.lineStart !== null) {
+    // Code just finished loading, scroll to the highlighted line
+    setTimeout(() => {
+      scrollToHighlightedLine()
+    }, 100)
   }
 })
 
-watch(() => state.value.mode, (mode) => {
-  if (state.value.isOpen) {
-    if (mode === 'drawer') {
-      document.body.classList.add('github-viewer-drawer-open')
-    } else {
-      document.body.classList.remove('github-viewer-drawer-open')
-    }
+const scrollToHighlightedLine = () => {
+  if (!codeContentRef.value || state.value.lineStart === null) return
+  
+  const lineElement = codeContentRef.value.querySelector(`[data-line="${state.value.lineStart}"]`)
+  if (lineElement) {
+    lineElement.scrollIntoView({ block: 'center', behavior: 'smooth' })
   }
+}
+
+const updateBodyClasses = () => {
+  if (typeof window === 'undefined') return
+  
+  if (state.value.isOpen && state.value.mode === 'drawer') {
+    document.body.classList.add('github-viewer-drawer-open')
+    updateDrawerWidthVar()
+  } else {
+    document.body.classList.remove('github-viewer-drawer-open')
+  }
+}
+
+// Handle body class for drawer mode (to push content)
+watch(() => state.value.isOpen, () => {
+  updateBodyClasses()
+})
+
+watch(() => state.value.mode, () => {
+  updateBodyClasses()
 })
 
 onMounted(() => {
   document.addEventListener('keydown', handleKeydown)
+  // Initialize drawer width based on window size
+  if (typeof window !== 'undefined') {
+    drawerWidth.value = Math.min(window.innerWidth * 0.5, 800)
+  }
+  updateDrawerWidthVar()
 })
 
 onUnmounted(() => {
@@ -122,7 +233,7 @@ onUnmounted(() => {
   document.body.classList.remove('github-viewer-drawer-open')
 })
 
-// Syntax highlighting using simple token-based approach
+// Syntax highlighting using tokenizer approach
 const highlightedLines = computed(() => {
   if (!displayedCode.value) return []
   
@@ -132,65 +243,135 @@ const highlightedLines = computed(() => {
   return lines.map(line => highlightLine(line, lang))
 })
 
-function highlightLine(line: string, lang: string): string {
-  if (!line) return '&nbsp;'
+interface Token {
+  type: 'keyword' | 'string' | 'comment' | 'number' | 'function' | 'text'
+  value: string
+}
+
+function tokenize(line: string, lang: string): Token[] {
+  if (!['javascript', 'typescript', 'jsx', 'tsx', 'js', 'ts'].includes(lang)) {
+    return [{ type: 'text', value: line }]
+  }
   
-  // Escape HTML first
-  let escaped = line
+  const tokens: Token[] = []
+  let remaining = line
+  
+  const keywords = new Set([
+    'import', 'export', 'from', 'default', 'const', 'let', 'var',
+    'function', 'return', 'if', 'else', 'for', 'while', 'do',
+    'switch', 'case', 'break', 'continue', 'try', 'catch', 'finally',
+    'throw', 'new', 'class', 'extends', 'implements', 'interface',
+    'type', 'enum', 'async', 'await', 'yield', 'static', 'public',
+    'private', 'protected', 'readonly', 'abstract', 'as', 'is',
+    'typeof', 'instanceof', 'in', 'of', 'void', 'null', 'undefined',
+    'true', 'false', 'this', 'super', 'constructor', 'get', 'set',
+    'opaque', 'declare'
+  ])
+  
+  while (remaining.length > 0) {
+    let matched = false
+    
+    // Single-line comment
+    if (remaining.startsWith('//')) {
+      tokens.push({ type: 'comment', value: remaining })
+      break
+    }
+    
+    // Multi-line comment start (handle partial)
+    const multiCommentMatch = remaining.match(/^\/\*[\s\S]*?(\*\/|$)/)
+    if (multiCommentMatch) {
+      tokens.push({ type: 'comment', value: multiCommentMatch[0] })
+      remaining = remaining.slice(multiCommentMatch[0].length)
+      matched = true
+      continue
+    }
+    
+    // String literals
+    for (const quote of ["'", '"', '`']) {
+      if (remaining.startsWith(quote)) {
+        let end = 1
+        while (end < remaining.length) {
+          if (remaining[end] === '\\' && end + 1 < remaining.length) {
+            end += 2
+            continue
+          }
+          if (remaining[end] === quote) {
+            end++
+            break
+          }
+          end++
+        }
+        tokens.push({ type: 'string', value: remaining.slice(0, end) })
+        remaining = remaining.slice(end)
+        matched = true
+        break
+      }
+    }
+    if (matched) continue
+    
+    // Numbers
+    const numMatch = remaining.match(/^(0x[0-9a-fA-F]+|0b[01]+|0o[0-7]+|\d+\.?\d*(?:e[+-]?\d+)?)\b/)
+    if (numMatch) {
+      tokens.push({ type: 'number', value: numMatch[0] })
+      remaining = remaining.slice(numMatch[0].length)
+      continue
+    }
+    
+    // Identifiers (keywords, functions, or plain text)
+    const identMatch = remaining.match(/^[a-zA-Z_$][a-zA-Z0-9_$]*/)
+    if (identMatch) {
+      const ident = identMatch[0]
+      const afterIdent = remaining.slice(ident.length)
+      
+      // Check if it's a function call
+      if (afterIdent.match(/^\s*\(/)) {
+        tokens.push({ type: 'function', value: ident })
+      } else if (keywords.has(ident)) {
+        tokens.push({ type: 'keyword', value: ident })
+      } else {
+        tokens.push({ type: 'text', value: ident })
+      }
+      remaining = remaining.slice(ident.length)
+      continue
+    }
+    
+    // Other characters (operators, punctuation, whitespace)
+    tokens.push({ type: 'text', value: remaining[0] })
+    remaining = remaining.slice(1)
+  }
+  
+  return tokens
+}
+
+function escapeHtml(text: string): string {
+  return text
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
+}
+
+function highlightLine(line: string, lang: string): string {
+  if (!line) return '&nbsp;'
   
-  // JavaScript/TypeScript highlighting
-  if (['javascript', 'typescript', 'jsx', 'tsx', 'js', 'ts'].includes(lang)) {
-    // Comments
-    escaped = escaped.replace(
-      /(\/\/.*$)/gm,
-      '<span class="hl-comment">$1</span>'
-    )
-    escaped = escaped.replace(
-      /(\/\*[\s\S]*?\*\/)/g,
-      '<span class="hl-comment">$1</span>'
-    )
-    
-    // Strings
-    escaped = escaped.replace(
-      /(&apos;[^&apos;]*&apos;|&quot;[^&quot;]*&quot;|`[^`]*`)/g,
-      '<span class="hl-string">$1</span>'
-    )
-    escaped = escaped.replace(
-      /('[^']*'|"[^"]*")/g,
-      '<span class="hl-string">$1</span>'
-    )
-    
-    // Keywords
-    const keywords = [
-      'import', 'export', 'from', 'default', 'const', 'let', 'var',
-      'function', 'return', 'if', 'else', 'for', 'while', 'do',
-      'switch', 'case', 'break', 'continue', 'try', 'catch', 'finally',
-      'throw', 'new', 'class', 'extends', 'implements', 'interface',
-      'type', 'enum', 'async', 'await', 'yield', 'static', 'public',
-      'private', 'protected', 'readonly', 'abstract', 'as', 'is',
-      'typeof', 'instanceof', 'in', 'of', 'void', 'null', 'undefined',
-      'true', 'false', 'this', 'super', 'constructor', 'get', 'set'
-    ]
-    const keywordRegex = new RegExp(`\\b(${keywords.join('|')})\\b`, 'g')
-    escaped = escaped.replace(keywordRegex, '<span class="hl-keyword">$1</span>')
-    
-    // Numbers
-    escaped = escaped.replace(
-      /\b(\d+\.?\d*)\b/g,
-      '<span class="hl-number">$1</span>'
-    )
-    
-    // Function calls
-    escaped = escaped.replace(
-      /\b([a-zA-Z_$][a-zA-Z0-9_$]*)\s*\(/g,
-      '<span class="hl-function">$1</span>('
-    )
-  }
+  const tokens = tokenize(line, lang)
   
-  return escaped
+  return tokens.map(token => {
+    const escaped = escapeHtml(token.value)
+    switch (token.type) {
+      case 'keyword':
+        return `<span class="hl-keyword">${escaped}</span>`
+      case 'string':
+        return `<span class="hl-string">${escaped}</span>`
+      case 'comment':
+        return `<span class="hl-comment">${escaped}</span>`
+      case 'number':
+        return `<span class="hl-number">${escaped}</span>`
+      case 'function':
+        return `<span class="hl-function">${escaped}</span>`
+      default:
+        return escaped
+    }
+  }).join('')
 }
 </script>
 
@@ -210,9 +391,16 @@ function highlightLine(line: string, lang: string): string {
       <div
         v-if="state.isOpen"
         ref="modalRef"
-        :class="['github-viewer', `github-viewer--${state.mode}`, { 'is-dragging': isDragging }]"
-        :style="state.mode === 'modal' ? modalStyle : {}"
+        :class="['github-viewer', `github-viewer--${state.mode}`, { 'is-dragging': isDragging, 'is-resizing': isResizing }]"
+        :style="state.mode === 'modal' ? modalStyle : drawerStyle"
       >
+        <!-- Resize handle for drawer (left edge) -->
+        <div
+          v-if="state.mode === 'drawer'"
+          class="github-viewer__resize-handle"
+          @mousedown="startResize"
+        />
+        
         <!-- Header (draggable in modal mode) -->
         <div 
           class="github-viewer__header"
@@ -256,7 +444,7 @@ function highlightLine(line: string, lang: string): string {
         </div>
         
         <!-- Content -->
-        <div class="github-viewer__content">
+        <div ref="codeContentRef" class="github-viewer__content">
           <!-- Loading -->
           <div v-if="state.isLoading" class="github-viewer__loading">
             <div class="github-viewer__spinner"></div>
@@ -279,7 +467,8 @@ function highlightLine(line: string, lang: string): string {
                 <tr
                   v-for="(line, idx) in highlightedLines"
                   :key="idx"
-                  class="github-viewer__line"
+                  :data-line="lineNumbers[idx]"
+                  :class="['github-viewer__line', { 'github-viewer__line--highlighted': isLineHighlighted(lineNumbers[idx]) }]"
                 >
                   <td class="github-viewer__line-number">
                     {{ lineNumbers[idx] }}
@@ -315,18 +504,43 @@ function highlightLine(line: string, lang: string): string {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
-.github-viewer.is-dragging {
+.github-viewer.is-dragging,
+.github-viewer.is-resizing {
   user-select: none;
+}
+
+.github-viewer.is-dragging {
   cursor: grabbing;
+}
+
+.github-viewer.is-resizing {
+  cursor: ew-resize;
 }
 
 /* Drawer Mode */
 .github-viewer--drawer {
   top: 0;
   right: 0;
-  width: min(50vw, 800px);
   height: 100vh;
   border-left: 2px solid var(--vp-c-brand-1);
+}
+
+/* Resize handle */
+.github-viewer__resize-handle {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 6px;
+  height: 100%;
+  cursor: ew-resize;
+  background: transparent;
+  transition: background 0.2s;
+  z-index: 10;
+}
+
+.github-viewer__resize-handle:hover,
+.github-viewer.is-resizing .github-viewer__resize-handle {
+  background: var(--vp-c-brand-1);
 }
 
 /* Modal Mode */
@@ -470,6 +684,34 @@ function highlightLine(line: string, lang: string): string {
   background: var(--vp-c-bg-soft);
 }
 
+/* Highlighted line range */
+.github-viewer__line--highlighted {
+  background: rgba(255, 235, 59, 0.15);
+}
+
+.github-viewer__line--highlighted:hover {
+  background: rgba(255, 235, 59, 0.25);
+}
+
+.github-viewer__line--highlighted .github-viewer__line-number {
+  background: rgba(255, 235, 59, 0.3);
+  color: var(--vp-c-text-1);
+  font-weight: 600;
+}
+
+/* Dark mode highlighted lines */
+.dark .github-viewer__line--highlighted {
+  background: rgba(255, 235, 59, 0.1);
+}
+
+.dark .github-viewer__line--highlighted:hover {
+  background: rgba(255, 235, 59, 0.15);
+}
+
+.dark .github-viewer__line--highlighted .github-viewer__line-number {
+  background: rgba(255, 235, 59, 0.2);
+}
+
 .github-viewer__line-number {
   width: 50px;
   padding: 0 12px;
@@ -574,7 +816,11 @@ function highlightLine(line: string, lang: string): string {
 /* Responsive */
 @media (max-width: 768px) {
   .github-viewer--drawer {
-    width: 100vw;
+    width: 100vw !important;
+  }
+  
+  .github-viewer__resize-handle {
+    display: none;
   }
   
   .github-viewer--modal {

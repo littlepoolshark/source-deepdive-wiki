@@ -63,32 +63,66 @@
    GitHub Code Viewer - Drawer Push Layout
    ============================================ */
 
-/* When drawer is open, push the main content to the left */
-body.github-viewer-drawer-open {
-  overflow: hidden;
+/* CSS variable for dynamic drawer width */
+:root {
+  --github-viewer-drawer-width: min(50vw, 800px);
 }
 
-body.github-viewer-drawer-open #app {
-  transition: margin-right 0.3s ease, width 0.3s ease;
-  margin-right: min(50vw, 800px);
-  width: calc(100% - min(50vw, 800px));
+/* When drawer is open */
+body.github-viewer-drawer-open {
   overflow-x: hidden;
 }
 
-/* Ensure the VitePress layout adapts */
-body.github-viewer-drawer-open .VPDoc {
-  transition: padding-right 0.3s ease;
+/* Hide top navigation bar when drawer is open */
+body.github-viewer-drawer-open .VPNav {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
 }
 
+/* Hide left sidebar when drawer is open */
+body.github-viewer-drawer-open .VPSidebar {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Hide local nav (mobile menu bar) when drawer is open */
+body.github-viewer-drawer-open .VPLocalNav {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Push main content to the left */
+body.github-viewer-drawer-open #app {
+  margin-right: var(--github-viewer-drawer-width);
+}
+
+/* Adjust content area when nav is hidden */
 body.github-viewer-drawer-open .VPContent {
-  transition: max-width 0.3s ease;
+  padding-top: 0;
 }
 
-/* Mobile: full width drawer, hide main content */
+/* Make content full width when sidebar is hidden */
+body.github-viewer-drawer-open .VPDoc {
+  padding-left: 32px;
+}
+
+/* Hide right aside (TOC) to maximize reading space */
+body.github-viewer-drawer-open .VPDoc.has-aside .aside {
+  display: none;
+}
+
+body.github-viewer-drawer-open .VPDoc.has-aside .content {
+  max-width: 100%;
+  padding-right: 32px;
+}
+
+/* Mobile: full width drawer, dim main content */
 @media (max-width: 768px) {
   body.github-viewer-drawer-open #app {
     margin-right: 0;
-    width: 100%;
     opacity: 0.3;
     pointer-events: none;
   }

@@ -138,30 +138,29 @@ export function useGithubCode() {
     state.value.mode = mode
   }
   
+  // Display the full code, not just the line range
   const displayedCode = computed(() => {
-    if (!state.value.code) return ''
-    
-    const lines = state.value.code.split('\n')
-    const start = state.value.lineStart
-    const end = state.value.lineEnd
-    
-    if (start !== null) {
-      const startIdx = Math.max(0, start - 1)
-      const endIdx = end !== null ? end : start
-      return lines.slice(startIdx, endIdx).join('\n')
-    }
-    
-    return state.value.code
+    return state.value.code || ''
   })
   
+  // Line numbers starting from 1
   const lineNumbers = computed(() => {
     if (!state.value.code) return []
     
-    const start = state.value.lineStart ?? 1
-    const lines = displayedCode.value.split('\n')
-    
-    return lines.map((_, i) => start + i)
+    const lines = state.value.code.split('\n')
+    return lines.map((_, i) => i + 1)
   })
+  
+  // Check if a line is in the highlighted range
+  const isLineHighlighted = (lineNum: number): boolean => {
+    const start = state.value.lineStart
+    const end = state.value.lineEnd
+    
+    if (start === null) return false
+    
+    const endLine = end ?? start
+    return lineNum >= start && lineNum <= endLine
+  }
   
   return {
     state,
@@ -170,6 +169,7 @@ export function useGithubCode() {
     toggleMode,
     setMode,
     displayedCode,
-    lineNumbers
+    lineNumbers,
+    isLineHighlighted
   }
 }
