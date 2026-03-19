@@ -9,18 +9,18 @@
 
 - [.eslintrc.js](.eslintrc.js)
 - [package.json](package.json)
-- [packages/eslint-plugin-react-hooks/package.json](packages/eslint-plugin-react-hooks/package.json)
-- [packages/jest-react/package.json](packages/jest-react/package.json)
-- [packages/react-art/package.json](packages/react-art/package.json)
-- [packages/react-dom/package.json](packages/react-dom/package.json)
-- [packages/react-is/package.json](packages/react-is/package.json)
-- [packages/react-native-renderer/package.json](packages/react-native-renderer/package.json)
-- [packages/react-noop-renderer/package.json](packages/react-noop-renderer/package.json)
-- [packages/react-reconciler/package.json](packages/react-reconciler/package.json)
-- [packages/react-test-renderer/package.json](packages/react-test-renderer/package.json)
-- [packages/react/package.json](packages/react/package.json)
-- [packages/scheduler/package.json](packages/scheduler/package.json)
-- [packages/shared/ReactVersion.js](packages/shared/ReactVersion.js)
+- [packages/eslint-plugin-react-hooks/package.json](https://github.com/facebook/react/blob/main/packages/eslint-plugin-react-hooks/package.json)
+- [packages/jest-react/package.json](https://github.com/facebook/react/blob/main/packages/jest-react/package.json)
+- [packages/react-art/package.json](https://github.com/facebook/react/blob/main/packages/react-art/package.json)
+- [packages/react-dom/package.json](https://github.com/facebook/react/blob/main/packages/react-dom/package.json)
+- [packages/react-is/package.json](https://github.com/facebook/react/blob/main/packages/react-is/package.json)
+- [packages/react-native-renderer/package.json](https://github.com/facebook/react/blob/main/packages/react-native-renderer/package.json)
+- [packages/react-noop-renderer/package.json](https://github.com/facebook/react/blob/main/packages/react-noop-renderer/package.json)
+- [packages/react-reconciler/package.json](https://github.com/facebook/react/blob/main/packages/react-reconciler/package.json)
+- [packages/react-test-renderer/package.json](https://github.com/facebook/react/blob/main/packages/react-test-renderer/package.json)
+- [packages/react/package.json](https://github.com/facebook/react/blob/main/packages/react/package.json)
+- [packages/scheduler/package.json](https://github.com/facebook/react/blob/main/packages/scheduler/package.json)
+- [packages/shared/ReactVersion.js](https://github.com/facebook/react/blob/main/packages/shared/ReactVersion.js)
 - [scripts/flow/config/flowconfig](scripts/flow/config/flowconfig)
 - [scripts/flow/createFlowConfigs.js](scripts/flow/createFlowConfigs.js)
 - [scripts/flow/environment.js](scripts/flow/environment.js)
@@ -46,12 +46,12 @@
 
 本文档提供仓库结构和主要系统的高级概述。有关特定子系统的详细信息，请参阅：
 
-- 特性标志管理：[特性标志系统](#2)
-- 构建与打包：[构建系统与包分发](#3)
-- 核心协调算法：[React Reconciler](#4)
-- 服务端渲染：[服务端渲染](#5)
-- 平台实现：[平台实现](#6)
-- 开发工具：[开发工具与调试](#7)
+- 特性标志管理：[特性标志系统](/2-feature-flags-system)
+- 构建与打包：[构建系统与包分发](/3-build-system-and-package-distribution)
+- 核心协调算法：[React Reconciler](/4-react-reconciler)
+- 服务端渲染：[服务端渲染](/5-server-side-rendering)
+- 平台实现：[平台实现](/6-platform-implementations)
+- 开发工具：[开发工具与调试](/7-developer-tools-and-debugging)
 
 ---
 
@@ -100,7 +100,7 @@ graph TB
     Root --> ServerPackages
 ```
 
-**来源：** [package.json:1-5](), [packages/react/package.json:1-7](), [packages/react-dom/package.json:1-10](), [packages/react-reconciler/package.json:1-10]()
+**来源：** [package.json:1-5](), [packages/react/package.json#L1-L7](https://github.com/facebook/react/blob/main/packages/react/package.json#L1-L7), [packages/react-dom/package.json#L1-L10](https://github.com/facebook/react/blob/main/packages/react-dom/package.json#L1-L10), [packages/react-reconciler/package.json#L1-L10](https://github.com/facebook/react/blob/main/packages/react-reconciler/package.json#L1-L10)
 
 ---
 
@@ -156,7 +156,7 @@ graph LR
     TestRenderer -->|dependency| Scheduler
 ```
 
-**来源：** [packages/react/package.json:1-52](), [packages/react-dom/package.json:19-21](), [packages/react-reconciler/package.json:28-33](), [packages/scheduler/package.json:1-27]()
+**来源：** [packages/react/package.json#L1-L52](https://github.com/facebook/react/blob/main/packages/react/package.json#L1-L52), [packages/react-dom/package.json#L19-L21](https://github.com/facebook/react/blob/main/packages/react-dom/package.json#L19-L21), [packages/react-reconciler/package.json#L28-L33](https://github.com/facebook/react/blob/main/packages/react-reconciler/package.json#L28-L33), [packages/scheduler/package.json#L1-L27](https://github.com/facebook/react/blob/main/packages/scheduler/package.json#L1-L27)
 
 ---
 
@@ -168,7 +168,7 @@ React 代码库围绕多个相互关联的系统组织：
 
 **特性标志**系统（`ReactFeatureFlags.js` 及环境特定的分支）控制在不同部署目标（Facebook web、React Native FB、React Native OSS、测试环境）中启用哪些特性。这是重要性最高的系统（重要性评分：820.92），因为它影响所有其他包。
 
-详细文档请参阅[特性标志系统](#2)。
+详细文档请参阅[特性标志系统](/2-feature-flags-system)。
 
 ### 构建系统
 
@@ -179,7 +179,7 @@ React 代码库围绕多个相互关联的系统组织：
 - `scripts/rollup/forks.js` - 模块替换配置
 - `scripts/shared/inlinedHostConfigs.js` - 渲染器配置（重要性：317.91）
 
-详细文档请参阅[构建系统与包分发](#3)。
+详细文档请参阅[构建系统与包分发](/3-build-system-and-package-distribution)。
 
 ### Fiber Reconciler
 
@@ -191,7 +191,7 @@ React 代码库围绕多个相互关联的系统组织：
 - Suspense 和错误边界
 - 用于平台独立性的 Host 配置抽象
 
-详细文档请参阅[React Reconciler](#4)。
+详细文档请参阅[React Reconciler](/4-react-reconciler)。
 
 ### 服务端渲染
 
@@ -200,15 +200,15 @@ React 提供两个服务端渲染系统：
 - **Fizz**（`ReactFizzServer`）- 支持 Suspense 的流式 HTML
 - **Flight**（`ReactFlightServer`）- 使用 RSC 协议的 Server Components
 
-详细文档请参阅[服务端渲染](#5)。
+详细文档请参阅[服务端渲染](/5-server-side-rendering)。
 
 ### 开发工具
 
 **React DevTools** 系统通过浏览器扩展和独立应用程序提供组件检查、性能分析和调试功能。DevTools 后端通过 `__REACT_DEVTOOLS_GLOBAL_HOOK__` 挂接到 React 渲染器。
 
-详细文档请参阅[开发工具与调试](#7)。
+详细文档请参阅[开发工具与调试](/7-developer-tools-and-debugging)。
 
-**来源：** [scripts/rollup/build-all-release-channels.js](), [scripts/shared/inlinedHostConfigs.js](), [packages/react-reconciler/package.json:1-34]()
+**来源：** [scripts/rollup/build-all-release-channels.js](), [scripts/shared/inlinedHostConfigs.js](), [packages/react-reconciler/package.json#L1-L34](https://github.com/facebook/react/blob/main/packages/react-reconciler/package.json#L1-L34)
 
 ---
 
@@ -273,7 +273,7 @@ graph TB
    - `ReactSymbols.js` - 内部符号
    - 各种工具模块
 
-**来源：** [packages/react-dom/package.json:51-126](), [packages/react/package.json:11-42](), [packages/shared/ReactVersion.js:1-16]()
+**来源：** [packages/react-dom/package.json#L51-L126](https://github.com/facebook/react/blob/main/packages/react-dom/package.json#L51-L126), [packages/react/package.json#L11-L42](https://github.com/facebook/react/blob/main/packages/react/package.json#L11-L42), [packages/shared/ReactVersion.js#L1-L16](https://github.com/facebook/react/blob/main/packages/shared/ReactVersion.js#L1-L16)
 
 ---
 
@@ -315,7 +315,7 @@ graph TB
 - `react-internal/no-production-logging` - 在生产环境中移除 console 调用
 - `no-for-of-loops` - 避免 Symbol polyfill 需求
 
-**来源：** [.eslintrc.js:1-658](), [scripts/rollup/validate/eslintrc.cjs.js:1-112](), [packages/eslint-plugin-react-hooks/package.json:1-68]()
+**来源：** [.eslintrc.js:1-658](), [scripts/rollup/validate/eslintrc.cjs.js#L1-L112](https://github.com/facebook/react/blob/main/scripts/rollup/validate/eslintrc.cjs.js#L1-L112), [packages/eslint-plugin-react-hooks/package.json#L1-L68](https://github.com/facebook/react/blob/main/packages/eslint-plugin-react-hooks/package.json#L1-L68)
 
 ### Flow 类型检查
 
@@ -335,7 +335,7 @@ graph LR
     Generator -.->|uses| HostConfigs["inlinedHostConfigs.js<br/>Renderer definitions"]
 ```
 
-**来源：** [scripts/flow/createFlowConfigs.js:1-153](), [scripts/flow/config/flowconfig:1-45](), [scripts/flow/environment.js:1-636]()
+**来源：** [scripts/flow/createFlowConfigs.js#L1-L153](https://github.com/facebook/react/blob/main/scripts/flow/createFlowConfigs.js#L1-L153), [scripts/flow/config/flowconfig#L1-L45](https://github.com/facebook/react/blob/main/scripts/flow/config/flowconfig#L1-L45), [scripts/flow/environment.js#L1-L636](https://github.com/facebook/react/blob/main/scripts/flow/environment.js#L1-L636)
 
 ### 测试基础设施
 
@@ -348,7 +348,7 @@ graph LR
 
 测试文件遵循 `**/__tests__/**/*.js` 模式，并在生产构建中排除。
 
-**来源：** [package.json:121-123](), [packages/jest-react/package.json:1-32](), [packages/react-test-renderer/package.json:1-35](), [packages/react-noop-renderer/package.json:1-32]()
+**来源：** [package.json:121-123](), [packages/jest-react/package.json#L1-L32](https://github.com/facebook/react/blob/main/packages/jest-react/package.json#L1-L32), [packages/react-test-renderer/package.json#L1-L35](https://github.com/facebook/react/blob/main/packages/react-test-renderer/package.json#L1-L35), [packages/react-noop-renderer/package.json#L1-L32](https://github.com/facebook/react/blob/main/packages/react-noop-renderer/package.json#L1-L32)
 
 ---
 
@@ -388,7 +388,7 @@ graph TB
     ClosureCompiler --> ProdBundle
 ```
 
-**来源：** [scripts/flow/environment.js:12-14](), [scripts/rollup/validate/eslintrc.cjs.js:43-60](), [.eslintrc.js:639-648]()
+**来源：** [scripts/flow/environment.js#L12-L14](https://github.com/facebook/react/blob/main/scripts/flow/environment.js#L12-L14), [scripts/rollup/validate/eslintrc.cjs.js#L43-L60](https://github.com/facebook/react/blob/main/scripts/rollup/validate/eslintrc.cjs.js#L43-L60), [.eslintrc.js:639-648]()
 
 ---
 
@@ -417,13 +417,13 @@ graph TB
     UserImport --> DefaultEnv
 ```
 
-[packages/react-dom/package.json:51-126]() 中的 `exports` 字段展示了此模式：
+[packages/react-dom/package.json#L51-L126](https://github.com/facebook/react/blob/main/packages/react-dom/package.json#L51-L126) 中的 `exports` 字段展示了此模式：
 
 - `react-server` 条件提供与 Server Components 兼容的导出
 - `node`、`browser`、`workerd`、`deno`、`bun` 条件选择运行时特定的代码
 - `default` 为其他环境提供回退
 
-**来源：** [packages/react-dom/package.json:51-126](), [packages/react/package.json:24-42]()
+**来源：** [packages/react-dom/package.json#L51-L126](https://github.com/facebook/react/blob/main/packages/react-dom/package.json#L51-L126), [packages/react/package.json#L24-L42](https://github.com/facebook/react/blob/main/packages/react/package.json#L24-L42)
 
 ---
 
@@ -431,7 +431,7 @@ graph TB
 
 仓库在多个位置维护版本信息：
 
-1. **单一数据源：** [packages/shared/ReactVersion.js:15]() 导出当前版本字符串（`'19.3.0'`）
+1. **单一数据源：** [packages/shared/ReactVersion.js:15](https://github.com/facebook/react/blob/main/packages/shared/ReactVersion.js:15) 导出当前版本字符串（`'19.3.0'`）
 2. **包清单：** 每个 `package.json` 声明其版本
 3. **依赖版本：** Peer 依赖和常规依赖指定版本范围
 
@@ -441,4 +441,4 @@ graph TB
 - `react-reconciler` 使用独立版本（`0.34.0`）
 - `scheduler` 具有独立版本（`0.28.0`）
 
-**来源：** [packages/shared/ReactVersion.js:1-16](), [packages/react/package.json:7](), [packages/react-dom/package.json:3](), [packages/react-reconciler/package.json:4](), [packages/scheduler/package.json:3]()
+**来源：** [packages/shared/ReactVersion.js#L1-L16](https://github.com/facebook/react/blob/main/packages/shared/ReactVersion.js#L1-L16), [packages/react/package.json:7](https://github.com/facebook/react/blob/main/packages/react/package.json:7), [packages/react-dom/package.json:3](https://github.com/facebook/react/blob/main/packages/react-dom/package.json:3), [packages/react-reconciler/package.json:4](https://github.com/facebook/react/blob/main/packages/react-reconciler/package.json:4), [packages/scheduler/package.json:3](https://github.com/facebook/react/blob/main/packages/scheduler/package.json:3)

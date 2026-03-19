@@ -9,28 +9,28 @@
 
 - [.eslintrc.js](.eslintrc.js)
 - [package.json](package.json)
-- [packages/eslint-plugin-react-hooks/package.json](packages/eslint-plugin-react-hooks/package.json)
-- [packages/jest-react/package.json](packages/jest-react/package.json)
-- [packages/react-art/package.json](packages/react-art/package.json)
-- [packages/react-dom/npm/server.browser.js](packages/react-dom/npm/server.browser.js)
-- [packages/react-dom/npm/server.bun.js](packages/react-dom/npm/server.bun.js)
-- [packages/react-dom/npm/server.edge.js](packages/react-dom/npm/server.edge.js)
-- [packages/react-dom/npm/server.node.js](packages/react-dom/npm/server.node.js)
-- [packages/react-dom/package.json](packages/react-dom/package.json)
-- [packages/react-dom/server.browser.js](packages/react-dom/server.browser.js)
-- [packages/react-dom/server.bun.js](packages/react-dom/server.bun.js)
-- [packages/react-dom/server.edge.js](packages/react-dom/server.edge.js)
-- [packages/react-dom/server.node.js](packages/react-dom/server.node.js)
-- [packages/react-dom/src/server/react-dom-server.bun.js](packages/react-dom/src/server/react-dom-server.bun.js)
-- [packages/react-dom/src/server/react-dom-server.bun.stable.js](packages/react-dom/src/server/react-dom-server.bun.stable.js)
-- [packages/react-is/package.json](packages/react-is/package.json)
-- [packages/react-native-renderer/package.json](packages/react-native-renderer/package.json)
-- [packages/react-noop-renderer/package.json](packages/react-noop-renderer/package.json)
-- [packages/react-reconciler/package.json](packages/react-reconciler/package.json)
-- [packages/react-test-renderer/package.json](packages/react-test-renderer/package.json)
-- [packages/react/package.json](packages/react/package.json)
-- [packages/scheduler/package.json](packages/scheduler/package.json)
-- [packages/shared/ReactVersion.js](packages/shared/ReactVersion.js)
+- [packages/eslint-plugin-react-hooks/package.json](https://github.com/facebook/react/blob/main/packages/eslint-plugin-react-hooks/package.json)
+- [packages/jest-react/package.json](https://github.com/facebook/react/blob/main/packages/jest-react/package.json)
+- [packages/react-art/package.json](https://github.com/facebook/react/blob/main/packages/react-art/package.json)
+- [packages/react-dom/npm/server.browser.js](https://github.com/facebook/react/blob/main/packages/react-dom/npm/server.browser.js)
+- [packages/react-dom/npm/server.bun.js](https://github.com/facebook/react/blob/main/packages/react-dom/npm/server.bun.js)
+- [packages/react-dom/npm/server.edge.js](https://github.com/facebook/react/blob/main/packages/react-dom/npm/server.edge.js)
+- [packages/react-dom/npm/server.node.js](https://github.com/facebook/react/blob/main/packages/react-dom/npm/server.node.js)
+- [packages/react-dom/package.json](https://github.com/facebook/react/blob/main/packages/react-dom/package.json)
+- [packages/react-dom/server.browser.js](https://github.com/facebook/react/blob/main/packages/react-dom/server.browser.js)
+- [packages/react-dom/server.bun.js](https://github.com/facebook/react/blob/main/packages/react-dom/server.bun.js)
+- [packages/react-dom/server.edge.js](https://github.com/facebook/react/blob/main/packages/react-dom/server.edge.js)
+- [packages/react-dom/server.node.js](https://github.com/facebook/react/blob/main/packages/react-dom/server.node.js)
+- [packages/react-dom/src/server/react-dom-server.bun.js](https://github.com/facebook/react/blob/main/packages/react-dom/src/server/react-dom-server.bun.js)
+- [packages/react-dom/src/server/react-dom-server.bun.stable.js](https://github.com/facebook/react/blob/main/packages/react-dom/src/server/react-dom-server.bun.stable.js)
+- [packages/react-is/package.json](https://github.com/facebook/react/blob/main/packages/react-is/package.json)
+- [packages/react-native-renderer/package.json](https://github.com/facebook/react/blob/main/packages/react-native-renderer/package.json)
+- [packages/react-noop-renderer/package.json](https://github.com/facebook/react/blob/main/packages/react-noop-renderer/package.json)
+- [packages/react-reconciler/package.json](https://github.com/facebook/react/blob/main/packages/react-reconciler/package.json)
+- [packages/react-test-renderer/package.json](https://github.com/facebook/react/blob/main/packages/react-test-renderer/package.json)
+- [packages/react/package.json](https://github.com/facebook/react/blob/main/packages/react/package.json)
+- [packages/scheduler/package.json](https://github.com/facebook/react/blob/main/packages/scheduler/package.json)
+- [packages/shared/ReactVersion.js](https://github.com/facebook/react/blob/main/packages/shared/ReactVersion.js)
 - [scripts/flow/config/flowconfig](scripts/flow/config/flowconfig)
 - [scripts/flow/createFlowConfigs.js](scripts/flow/createFlowConfigs.js)
 - [scripts/flow/environment.js](scripts/flow/environment.js)
@@ -59,7 +59,7 @@
 
 本文档描述 React 的构建系统架构，该系统将源代码编译为适用于多种环境和平台的可分发包。系统使用 Rollup 作为核心打包工具，应用特定环境的转换，并从共享代码库生成数十种 bundle 变体。
 
-关于控制每个构建中包含哪些代码的特性标志（feature flags）信息，请参阅[特性标志系统](#2)。关于构建产物如何与 CI/CD 集成的详细信息，请参阅[CI/CD 与产物管理](#3.3)。
+关于控制每个构建中包含哪些代码的特性标志（feature flags）信息，请参阅[特性标志系统](/2-feature-flags-system)。关于构建产物如何与 CI/CD 集成的详细信息，请参阅[CI/CD 与产物管理](/3.3-cicd-and-artifact-management)。
 
 ---
 
@@ -113,7 +113,7 @@ graph TB
     OutputPath --> Files
 ```
 
-**来源：** [scripts/rollup/build.js:1-700](), [package.json:126](), [scripts/rollup/bundles.js:1-100](), [scripts/rollup/forks.js:1-485](), [scripts/rollup/packaging.js:1-292](), [scripts/rollup/wrappers.js:1-300]()
+**来源：** [scripts/rollup/build.js#L1-L700](https://github.com/facebook/react/blob/main/scripts/rollup/build.js#L1-L700), [package.json:126](), [scripts/rollup/bundles.js#L1-L100](https://github.com/facebook/react/blob/main/scripts/rollup/bundles.js#L1-L100), [scripts/rollup/forks.js#L1-L485](https://github.com/facebook/react/blob/main/scripts/rollup/forks.js#L1-L485), [scripts/rollup/packaging.js#L1-L292](https://github.com/facebook/react/blob/main/scripts/rollup/packaging.js#L1-L292), [scripts/rollup/wrappers.js#L1-L300](https://github.com/facebook/react/blob/main/scripts/rollup/wrappers.js#L1-L300)
 
 ---
 
@@ -146,7 +146,7 @@ graph TB
 | `CJS_DTS` | CommonJS | TypeScript | CJS 的类型定义 |
 | `ESM_DTS` | ES Modules | TypeScript | ESM 的类型定义 |
 
-**来源：** [scripts/rollup/bundles.js:10-54](), [scripts/rollup/build.js:50-71]()
+**来源：** [scripts/rollup/bundles.js#L10-L54](https://github.com/facebook/react/blob/main/scripts/rollup/bundles.js#L10-L54), [scripts/rollup/build.js#L50-L71](https://github.com/facebook/react/blob/main/scripts/rollup/build.js#L50-L71)
 
 ### Bundle 配置结构
 
@@ -169,7 +169,7 @@ graph LR
     ModuleType --> RENDERER_UTILS["RENDERER_UTILS<br/>TestUtils, plugins"]
 ```
 
-**来源：** [scripts/rollup/bundles.js:56-68](), [scripts/rollup/bundles.js:69-885]()
+**来源：** [scripts/rollup/bundles.js#L56-L68](https://github.com/facebook/react/blob/main/scripts/rollup/bundles.js#L56-L68), [scripts/rollup/bundles.js#L69-L885](https://github.com/facebook/react/blob/main/scripts/rollup/bundles.js#L69-L885)
 
 ---
 
@@ -212,7 +212,7 @@ graph TB
 | `ReactFlightClientConfig.js` | Flight 客户端配置 | 平台特定客户端实现 |
 | `EventListener.js` | 事件附加 | Facebook 使用 `EventListener-www.js` |
 
-**来源：** [scripts/rollup/forks.js:52-482](), [scripts/rollup/build.js:398](), [scripts/rollup/modules.js:64-81]()
+**来源：** [scripts/rollup/forks.js#L52-L482](https://github.com/facebook/react/blob/main/scripts/rollup/forks.js#L52-L482), [scripts/rollup/build.js:398](), [scripts/rollup/modules.js#L64-L81](https://github.com/facebook/react/blob/main/scripts/rollup/modules.js#L64-L81)
 
 ### 分叉函数签名
 
@@ -226,7 +226,7 @@ graph TB
 - 返回文件路径字符串以替换模块
 - 对于导入时应报错的模块，返回 Error 对象
 
-**来源：** [scripts/rollup/forks.js:52-89](), [scripts/rollup/modules.js:64-81]()
+**来源：** [scripts/rollup/forks.js#L52-L89](https://github.com/facebook/react/blob/main/scripts/rollup/forks.js#L52-L89), [scripts/rollup/modules.js#L64-L81](https://github.com/facebook/react/blob/main/scripts/rollup/modules.js#L64-L81)
 
 ---
 
@@ -272,7 +272,7 @@ graph TB
 | `native-fb` | `react-native-renderer` | 否 | 否 |
 | `native-oss` | `react-native-renderer` | 否 | 否 |
 
-**来源：** [scripts/shared/inlinedHostConfigs.js:9-500](), [scripts/rollup/forks.js:242-436]()
+**来源：** [scripts/shared/inlinedHostConfigs.js#L9-L500](https://github.com/facebook/react/blob/main/scripts/shared/inlinedHostConfigs.js#L9-L500), [scripts/rollup/forks.js#L242-L436](https://github.com/facebook/react/blob/main/scripts/rollup/forks.js#L242-L436)
 
 ### 分段分叉解析
 
@@ -289,7 +289,7 @@ graph LR
     Try2 -->|not found| Error["Throw error:<br/>No fork found"]
 ```
 
-**来源：** [scripts/rollup/forks.js:29-43]()
+**来源：** [scripts/rollup/forks.js#L29-L43](https://github.com/facebook/react/blob/main/scripts/rollup/forks.js#L29-L43)
 
 ---
 
@@ -338,7 +338,7 @@ graph TB
     Sizes --> Output["Final Bundle"]
 ```
 
-**来源：** [scripts/rollup/build.js:354-546]()
+**来源：** [scripts/rollup/build.js#L354-L546](https://github.com/facebook/react/blob/main/scripts/rollup/build.js#L354-L546)
 
 ### Babel 配置
 
@@ -360,7 +360,7 @@ graph LR
     ErrorCheck -->|No| NoErrors["Keep full messages"]
 ```
 
-**来源：** [scripts/rollup/build.js:143-172](), [scripts/rollup/build.js:111-141]()
+**来源：** [scripts/rollup/build.js#L143-L172](https://github.com/facebook/react/blob/main/scripts/rollup/build.js#L143-L172), [scripts/rollup/build.js#L111-L141](https://github.com/facebook/react/blob/main/scripts/rollup/build.js#L111-L141)
 
 ---
 
@@ -396,7 +396,7 @@ graph TB
     ReactNative --> RNShims["shims/<br/>RN-specific"]
 ```
 
-**来源：** [scripts/rollup/packaging.js:48-114]()
+**来源：** [scripts/rollup/packaging.js#L48-L114](https://github.com/facebook/react/blob/main/scripts/rollup/packaging.js#L48-L114)
 
 ### 路径确定逻辑
 
@@ -412,7 +412,7 @@ graph TB
 | `RN_FB_*` | 其他 | `build/facebook-react-native/{pkg}/cjs/{filename}` |
 | `BROWSER_SCRIPT` | 任意 | `build/node_modules/{pkg}/{bundle.outputPath}` |
 
-**来源：** [scripts/rollup/packaging.js:48-115]()
+**来源：** [scripts/rollup/packaging.js#L48-L115](https://github.com/facebook/react/blob/main/scripts/rollup/packaging.js#L48-L115)
 
 ---
 
@@ -449,7 +449,7 @@ graph TB
     Extract --> Cleanup["Delete .tgz"]
 ```
 
-**来源：** [scripts/rollup/packaging.js:253-284](), [scripts/rollup/packaging.js:171-251]()
+**来源：** [scripts/rollup/packaging.js#L253-L284](https://github.com/facebook/react/blob/main/scripts/rollup/packaging.js#L253-L284), [scripts/rollup/packaging.js#L171-L251](https://github.com/facebook/react/blob/main/scripts/rollup/packaging.js#L171-L251)
 
 ### 入口点过滤
 
@@ -475,7 +475,7 @@ graph LR
     RemoveFile --> UpdateBrowser["Update browser field"]
 ```
 
-**来源：** [scripts/rollup/packaging.js:158-251]()
+**来源：** [scripts/rollup/packaging.js#L158-L251](https://github.com/facebook/react/blob/main/scripts/rollup/packaging.js#L158-L251)
 
 ---
 
@@ -513,7 +513,7 @@ graph TB
     License --> Final["Final bundle code"]
 ```
 
-**来源：** [scripts/rollup/wrappers.js:32-50](), [scripts/rollup/wrappers.js:58-169](), [scripts/rollup/build.js:446-520]()
+**来源：** [scripts/rollup/wrappers.js#L32-L50](https://github.com/facebook/react/blob/main/scripts/rollup/wrappers.js#L32-L50), [scripts/rollup/wrappers.js#L58-L169](https://github.com/facebook/react/blob/main/scripts/rollup/wrappers.js#L58-L169), [scripts/rollup/build.js#L446-L520](https://github.com/facebook/react/blob/main/scripts/rollup/build.js#L446-L520)
 
 ### 许可证头部格式
 
@@ -528,7 +528,7 @@ graph TB
  */
 ```
 
-**来源：** [scripts/rollup/wrappers.js:53-56]()
+**来源：** [scripts/rollup/wrappers.js#L53-L56](https://github.com/facebook/react/blob/main/scripts/rollup/wrappers.js#L53-L56)
 
 ---
 
@@ -547,7 +547,7 @@ graph TB
 | 保护包装器 | `if (process.env.NODE_ENV !== "production")` | 无 |
 | Source maps | 不生成 | 不生成 |
 
-**来源：** [scripts/rollup/build.js:253-280](), [scripts/rollup/build.js:432-442](), [scripts/rollup/build.js:469-500]()
+**来源：** [scripts/rollup/build.js#L253-L280](https://github.com/facebook/react/blob/main/scripts/rollup/build.js#L253-L280), [scripts/rollup/build.js#L432-L442](https://github.com/facebook/react/blob/main/scripts/rollup/build.js#L432-L442), [scripts/rollup/build.js#L469-L500](https://github.com/facebook/react/blob/main/scripts/rollup/build.js#L469-L500)
 
 ### 性能分析 Bundle
 
@@ -557,7 +557,7 @@ graph TB
 - 额外的性能跟踪代码
 - 启用的 Profiler hooks
 
-**来源：** [scripts/rollup/build.js:283-310](), [scripts/rollup/build.js:432-442]()
+**来源：** [scripts/rollup/build.js#L283-L310](https://github.com/facebook/react/blob/main/scripts/rollup/build.js#L283-L310), [scripts/rollup/build.js#L432-L442](https://github.com/facebook/react/blob/main/scripts/rollup/build.js#L432-L442)
 
 ### Facebook 内部 Bundle
 
@@ -568,7 +568,7 @@ Facebook bundle（`FB_WWW_*` 和 `RN_FB_*`）具有特殊特性：
 - 可能使用 Facebook 特定的事件监听器包装器
 - 输出到单独的目录（`facebook-www/`, `facebook-react-native/`）
 
-**来源：** [scripts/rollup/bundles.js:19-21](), [scripts/rollup/forks.js:180-188](), [scripts/rollup/packaging.js:64-94]()
+**来源：** [scripts/rollup/bundles.js#L19-L21](https://github.com/facebook/react/blob/main/scripts/rollup/bundles.js#L19-L21), [scripts/rollup/forks.js#L180-L188](https://github.com/facebook/react/blob/main/scripts/rollup/forks.js#L180-L188), [scripts/rollup/packaging.js#L64-L94](https://github.com/facebook/react/blob/main/scripts/rollup/packaging.js#L64-L94)
 
 ---
 
@@ -581,11 +581,11 @@ monorepo 为不同用例提供了多个构建命令。
 | 命令 | 描述 | 实现 |
 |---------|-------------|----------------|
 | `yarn build` | 构建所有发布渠道 | [package.json:126]() → `build-all-release-channels.js` |
-| `yarn build --type=NODE` | 仅构建 Node bundle | [scripts/rollup/build.js:94-98]() |
-| `yarn build react/index,react-dom/index` | 构建特定入口点 | [scripts/rollup/build.js:100-104]() |
+| `yarn build --type=NODE` | 仅构建 Node bundle | [scripts/rollup/build.js#L94-L98](https://github.com/facebook/react/blob/main/scripts/rollup/build.js#L94-L98) |
+| `yarn build react/index,react-dom/index` | 构建特定入口点 | [scripts/rollup/build.js#L100-L104](https://github.com/facebook/react/blob/main/scripts/rollup/build.js#L100-L104) |
 | `yarn build --watch` | 开发模式监听 | [scripts/rollup/build.js:106]() |
 
-**来源：** [package.json:124-157](), [scripts/rollup/build.js:94-106]()
+**来源：** [package.json:124-157](), [scripts/rollup/build.js#L94-L106](https://github.com/facebook/react/blob/main/scripts/rollup/build.js#L94-L106)
 
 ### 专用构建目标
 
@@ -629,7 +629,7 @@ graph TB
     Externals --> Bundle["Bundle generation<br/>(external deps excluded)"]
 ```
 
-**来源：** [scripts/rollup/modules.js:50-61](), [scripts/rollup/build.js:653-654]()
+**来源：** [scripts/rollup/modules.js#L50-L61](https://github.com/facebook/react/blob/main/scripts/rollup/modules.js#L50-L61), [scripts/rollup/build.js#L653-L654](https://github.com/facebook/react/blob/main/scripts/rollup/build.js#L653-L654)
 
 ### 全局变量映射
 
@@ -643,7 +643,7 @@ graph TB
 | `scheduler` | `Scheduler` |
 | `scheduler/unstable_mock` | `SchedulerMock` |
 
-**来源：** [scripts/rollup/modules.js:31-38](), [scripts/rollup/build.js:650]()
+**来源：** [scripts/rollup/modules.js#L31-L38](https://github.com/facebook/react/blob/main/scripts/rollup/modules.js#L31-L38), [scripts/rollup/build.js:650]()
 
 ---
 
@@ -678,7 +678,7 @@ graph TB
     Check --> Report["Report errors"]
 ```
 
-**来源：** [scripts/rollup/validate/index.js:1-100](), [package.json:135]()
+**来源：** [scripts/rollup/validate/index.js#L1-L100](https://github.com/facebook/react/blob/main/scripts/rollup/validate/index.js#L1-L100), [package.json:135]()
 
 ### 验证规则
 
@@ -690,7 +690,7 @@ graph TB
 - **FB**：ES5 语法，`__DEV__` 全局变量
 - **RN**：ES5 语法，React Native 全局变量（`nativeFabricUIManager`）
 
-**来源：** [scripts/rollup/validate/eslintrc.cjs.js:1-111](), [scripts/rollup/validate/eslintrc.fb.js:1-100](), [scripts/rollup/validate/eslintrc.rn.js:1-96]()
+**来源：** [scripts/rollup/validate/eslintrc.cjs.js#L1-L111](https://github.com/facebook/react/blob/main/scripts/rollup/validate/eslintrc.cjs.js#L1-L111), [scripts/rollup/validate/eslintrc.fb.js#L1-L100](https://github.com/facebook/react/blob/main/scripts/rollup/validate/eslintrc.fb.js#L1-L100), [scripts/rollup/validate/eslintrc.rn.js#L1-L96](https://github.com/facebook/react/blob/main/scripts/rollup/validate/eslintrc.rn.js#L1-L96)
 
 ---
 
@@ -732,7 +732,7 @@ graph TB
     UseProd --> FinalEntry
 ```
 
-**来源：** [scripts/rollup/build.js:585-633]()
+**来源：** [scripts/rollup/build.js#L585-L633](https://github.com/facebook/react/blob/main/scripts/rollup/build.js#L585-L633)
 
 ### package.json 中的条件导出
 
@@ -757,7 +757,7 @@ React 包使用 Node.js 条件导出来选择实现：
 }
 ```
 
-**来源：** [packages/react-dom/package.json:51-125](), [packages/react/package.json:24-43]()
+**来源：** [packages/react-dom/package.json#L51-L125](https://github.com/facebook/react/blob/main/packages/react-dom/package.json#L51-L125), [packages/react/package.json#L24-L43](https://github.com/facebook/react/blob/main/packages/react/package.json#L24-L43)
 
 ---
 

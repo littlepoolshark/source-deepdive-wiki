@@ -7,15 +7,15 @@
 
 以下文件被用作生成此 wiki 页面的上下文：
 
-- [packages/shared/ReactFeatureFlags.js](packages/shared/ReactFeatureFlags.js)
-- [packages/shared/forks/ReactFeatureFlags.native-fb-dynamic.js](packages/shared/forks/ReactFeatureFlags.native-fb-dynamic.js)
-- [packages/shared/forks/ReactFeatureFlags.native-fb.js](packages/shared/forks/ReactFeatureFlags.native-fb.js)
-- [packages/shared/forks/ReactFeatureFlags.native-oss.js](packages/shared/forks/ReactFeatureFlags.native-oss.js)
-- [packages/shared/forks/ReactFeatureFlags.test-renderer.js](packages/shared/forks/ReactFeatureFlags.test-renderer.js)
-- [packages/shared/forks/ReactFeatureFlags.test-renderer.native-fb.js](packages/shared/forks/ReactFeatureFlags.test-renderer.native-fb.js)
-- [packages/shared/forks/ReactFeatureFlags.test-renderer.www.js](packages/shared/forks/ReactFeatureFlags.test-renderer.www.js)
-- [packages/shared/forks/ReactFeatureFlags.www-dynamic.js](packages/shared/forks/ReactFeatureFlags.www-dynamic.js)
-- [packages/shared/forks/ReactFeatureFlags.www.js](packages/shared/forks/ReactFeatureFlags.www.js)
+- [packages/shared/ReactFeatureFlags.js](https://github.com/facebook/react/blob/main/packages/shared/ReactFeatureFlags.js)
+- [packages/shared/forks/ReactFeatureFlags.native-fb-dynamic.js](https://github.com/facebook/react/blob/main/packages/shared/forks/ReactFeatureFlags.native-fb-dynamic.js)
+- [packages/shared/forks/ReactFeatureFlags.native-fb.js](https://github.com/facebook/react/blob/main/packages/shared/forks/ReactFeatureFlags.native-fb.js)
+- [packages/shared/forks/ReactFeatureFlags.native-oss.js](https://github.com/facebook/react/blob/main/packages/shared/forks/ReactFeatureFlags.native-oss.js)
+- [packages/shared/forks/ReactFeatureFlags.test-renderer.js](https://github.com/facebook/react/blob/main/packages/shared/forks/ReactFeatureFlags.test-renderer.js)
+- [packages/shared/forks/ReactFeatureFlags.test-renderer.native-fb.js](https://github.com/facebook/react/blob/main/packages/shared/forks/ReactFeatureFlags.test-renderer.native-fb.js)
+- [packages/shared/forks/ReactFeatureFlags.test-renderer.www.js](https://github.com/facebook/react/blob/main/packages/shared/forks/ReactFeatureFlags.test-renderer.www.js)
+- [packages/shared/forks/ReactFeatureFlags.www-dynamic.js](https://github.com/facebook/react/blob/main/packages/shared/forks/ReactFeatureFlags.www-dynamic.js)
+- [packages/shared/forks/ReactFeatureFlags.www.js](https://github.com/facebook/react/blob/main/packages/shared/forks/ReactFeatureFlags.www.js)
 - [scripts/flow/xplat.js](scripts/flow/xplat.js)
 
 </details>
@@ -26,7 +26,7 @@
 
 Feature Flags 系统是 React 用于控制实验性功能、平台特定行为以及在不同环境和发布渠道中逐步推出功能的综合机制。它使得同一代码库能够针对 Facebook 内部基础设施（www）、React Native Facebook 内部版本（native-fb）、React Native 开源版本（native-oss）和测试渲染器编译出不同的行为，同时支持 A/B 测试和生产环境中可运行时控制的标志。
 
-本文档涵盖标志定义结构、分叉机制、动态标志集成、构建时宏和标志生命周期管理。关于构建系统如何处理这些标志的信息，请参阅[构建系统与包分发](#3)。关于标志如何影响协调器行为的信息，请参阅[React Reconciler](#4)。
+本文档涵盖标志定义结构、分叉机制、动态标志集成、构建时宏和标志生命周期管理。关于构建系统如何处理这些标志的信息，请参阅[构建系统与包分发](/3-build-system-and-package-distribution)。关于标志如何影响协调器行为的信息，请参阅[React Reconciler](/4-react-reconciler)。
 
 ## 系统架构
 
@@ -86,7 +86,7 @@ graph TB
     VariantMacro --> NativeFBDynamic
 ```
 
-**来源：** [packages/shared/ReactFeatureFlags.js:1-259](), [packages/shared/forks/ReactFeatureFlags.www.js:1-121](), [packages/shared/forks/ReactFeatureFlags.native-fb.js:1-92](), [packages/shared/forks/ReactFeatureFlags.native-oss.js:1-91]()
+**来源：** [packages/shared/ReactFeatureFlags.js#L1-L259](https://github.com/facebook/react/blob/main/packages/shared/ReactFeatureFlags.js#L1-L259), [packages/shared/forks/ReactFeatureFlags.www.js#L1-L121](https://github.com/facebook/react/blob/main/packages/shared/forks/ReactFeatureFlags.www.js#L1-L121), [packages/shared/forks/ReactFeatureFlags.native-fb.js#L1-L92](https://github.com/facebook/react/blob/main/packages/shared/forks/ReactFeatureFlags.native-fb.js#L1-L92), [packages/shared/forks/ReactFeatureFlags.native-oss.js#L1-L91](https://github.com/facebook/react/blob/main/packages/shared/forks/ReactFeatureFlags.native-oss.js#L1-L91)
 
 ## 基础 Feature Flag 定义
 
@@ -108,7 +108,7 @@ graph LR
     BaseFlags --> DebuggingDevTools["Debugging and DevTools<br/>Lines 225-259"]
 ```
 
-**来源：** [packages/shared/ReactFeatureFlags.js:10-259]()
+**来源：** [packages/shared/ReactFeatureFlags.js#L10-L259](https://github.com/facebook/react/blob/main/packages/shared/ReactFeatureFlags.js#L10-L259)
 
 ### 关键标志类别
 
@@ -121,7 +121,7 @@ graph LR
 | **Ready for next major** | 计划在下一个主要版本中发布的功能 | `disableLegacyContext`, `disableLegacyMode`, `renameElementSymbol` | [177, 195, 167]() |
 | **Debugging and DevTools** | 性能分析和开发工具 | `enableProfilerTimer`, `enableComponentPerformanceTrack` | [229, 235]() |
 
-**来源：** [packages/shared/ReactFeatureFlags.js:10-259]()
+**来源：** [packages/shared/ReactFeatureFlags.js#L10-L259](https://github.com/facebook/react/blob/main/packages/shared/ReactFeatureFlags.js#L10-L259)
 
 ### 常见标志模式
 
@@ -146,7 +146,7 @@ export const transitionLaneExpirationMs = 5000;
 export const ownerStackLimit = 1e4;
 ```
 
-**来源：** [packages/shared/ReactFeatureFlags.js:83-141, 167-172, 258]()
+**来源：** [packages/shared/ReactFeatureFlags.js:83-141, 167-172, 258](https://github.com/facebook/react/blob/main/packages/shared/ReactFeatureFlags.js:83-141, 167-172, 258)
 
 ## 分叉机制
 
@@ -177,7 +177,7 @@ graph TB
     Base --> Import1
 ```
 
-**来源：** [packages/shared/forks/ReactFeatureFlags.www.js:1-121](), [packages/shared/forks/ReactFeatureFlags.native-fb.js:1-92](), [packages/shared/forks/ReactFeatureFlags.native-oss.js:1-91]()
+**来源：** [packages/shared/forks/ReactFeatureFlags.www.js#L1-L121](https://github.com/facebook/react/blob/main/packages/shared/forks/ReactFeatureFlags.www.js#L1-L121), [packages/shared/forks/ReactFeatureFlags.native-fb.js#L1-L92](https://github.com/facebook/react/blob/main/packages/shared/forks/ReactFeatureFlags.native-fb.js#L1-L92), [packages/shared/forks/ReactFeatureFlags.native-oss.js#L1-L91](https://github.com/facebook/react/blob/main/packages/shared/forks/ReactFeatureFlags.native-oss.js#L1-L91)
 
 ### 分叉类型验证
 
@@ -192,7 +192,7 @@ graph TB
 2. 分叉不会导出基础文件中不存在的额外标志
 3. 类型签名完全匹配
 
-**来源：** [packages/shared/forks/ReactFeatureFlags.www.js:120](), [packages/shared/forks/ReactFeatureFlags.native-fb.js:91](), [packages/shared/forks/ReactFeatureFlags.native-oss.js:90]()
+**来源：** [packages/shared/forks/ReactFeatureFlags.www.js:120](https://github.com/facebook/react/blob/main/packages/shared/forks/ReactFeatureFlags.www.js:120), [packages/shared/forks/ReactFeatureFlags.native-fb.js:91](https://github.com/facebook/react/blob/main/packages/shared/forks/ReactFeatureFlags.native-fb.js:91), [packages/shared/forks/ReactFeatureFlags.native-oss.js:90](https://github.com/facebook/react/blob/main/packages/shared/forks/ReactFeatureFlags.native-oss.js:90)
 
 ### 平台特定标志值
 
@@ -207,7 +207,7 @@ graph TB
 | `enableScopeAPI` | false | true | false | false |
 | `enableViewTransition` | true | true | false | true |
 
-**来源：** [packages/shared/ReactFeatureFlags.js:61, 195, 184, 52, 55, 85](), [packages/shared/forks/ReactFeatureFlags.www.js:55, 101, 53, 87, 85](), [packages/shared/forks/ReactFeatureFlags.native-fb.js:51, 39, 46, 62, 60](), [packages/shared/forks/ReactFeatureFlags.native-oss.js:37, 24, 31, 50, 47, 65]()
+**来源：** [packages/shared/ReactFeatureFlags.js:61, 195, 184, 52, 55, 85](https://github.com/facebook/react/blob/main/packages/shared/ReactFeatureFlags.js:61, 195, 184, 52, 55, 85), [packages/shared/forks/ReactFeatureFlags.www.js:55, 101, 53, 87, 85](https://github.com/facebook/react/blob/main/packages/shared/forks/ReactFeatureFlags.www.js:55, 101, 53, 87, 85), [packages/shared/forks/ReactFeatureFlags.native-fb.js:51, 39, 46, 62, 60](https://github.com/facebook/react/blob/main/packages/shared/forks/ReactFeatureFlags.native-fb.js:51, 39, 46, 62, 60), [packages/shared/forks/ReactFeatureFlags.native-oss.js:37, 24, 31, 50, 47, 65](https://github.com/facebook/react/blob/main/packages/shared/forks/ReactFeatureFlags.native-oss.js:37, 24, 31, 50, 47, 65)
 
 ## 动态 Feature Flags
 
@@ -249,7 +249,7 @@ export const {
 } = dynamicFeatureFlags;
 ```
 
-**来源：** [packages/shared/forks/ReactFeatureFlags.www.js:15-39]()
+**来源：** [packages/shared/forks/ReactFeatureFlags.www.js#L15-L39](https://github.com/facebook/react/blob/main/packages/shared/forks/ReactFeatureFlags.www.js#L15-L39)
 
 ### Native Facebook 动态标志
 
@@ -272,7 +272,7 @@ export const {
 } = dynamicFlags;
 ```
 
-**来源：** [packages/shared/forks/ReactFeatureFlags.native-fb.js:16-31](), [scripts/flow/xplat.js:10-12]()
+**来源：** [packages/shared/forks/ReactFeatureFlags.native-fb.js#L16-L31](https://github.com/facebook/react/blob/main/packages/shared/forks/ReactFeatureFlags.native-fb.js#L16-L31), [scripts/flow/xplat.js#L10-L12](https://github.com/facebook/react/blob/main/scripts/flow/xplat.js#L10-L12)
 
 ### __VARIANT__ 测试模式
 
@@ -287,7 +287,7 @@ export const enableRetryLaneExpiration: boolean = __VARIANT__;
 
 这允许测试将在生产环境中动态控制的标志的两个代码路径。
 
-**来源：** [packages/shared/forks/ReactFeatureFlags.www-dynamic.js:13-42](), [packages/shared/forks/ReactFeatureFlags.native-fb-dynamic.js:10-30]()
+**来源：** [packages/shared/forks/ReactFeatureFlags.www-dynamic.js#L13-L42](https://github.com/facebook/react/blob/main/packages/shared/forks/ReactFeatureFlags.www-dynamic.js#L13-L42), [packages/shared/forks/ReactFeatureFlags.native-fb-dynamic.js#L10-L30](https://github.com/facebook/react/blob/main/packages/shared/forks/ReactFeatureFlags.native-fb-dynamic.js#L10-L30)
 
 ## 构建时宏
 
@@ -322,7 +322,7 @@ graph TB
     ClosureCompiler --> OptimizedBundle["Optimized Bundle<br/>Unused paths removed"]
 ```
 
-**来源：** [packages/shared/ReactFeatureFlags.js:77-126, 229-256](), [packages/shared/forks/ReactFeatureFlags.www.js:41-69]()
+**来源：** [packages/shared/ReactFeatureFlags.js:77-126, 229-256](https://github.com/facebook/react/blob/main/packages/shared/ReactFeatureFlags.js:77-126, 229-256), [packages/shared/forks/ReactFeatureFlags.www.js#L41-L69](https://github.com/facebook/react/blob/main/packages/shared/forks/ReactFeatureFlags.www.js#L41-L69)
 
 ### __EXPERIMENTAL__ 宏
 
@@ -342,7 +342,7 @@ export const disableLegacyContext = __EXPERIMENTAL__;
 export const disableTextareaChildren = __EXPERIMENTAL__;
 ```
 
-**来源：** [packages/shared/ReactFeatureFlags.js:77, 79, 81, 87](), [packages/shared/forks/ReactFeatureFlags.www.js:69, 91]()
+**来源：** [packages/shared/ReactFeatureFlags.js:77, 79, 81, 87](https://github.com/facebook/react/blob/main/packages/shared/ReactFeatureFlags.js:77, 79, 81, 87), [packages/shared/forks/ReactFeatureFlags.www.js:69, 91](https://github.com/facebook/react/blob/main/packages/shared/forks/ReactFeatureFlags.www.js:69, 91)
 
 ### __PROFILE__ 宏
 
@@ -359,7 +359,7 @@ export const enableSchedulingProfiler: boolean =
 
 这使 React DevTools 性能分析功能得以启用，而不会影响生产 bundle 大小。
 
-**来源：** [packages/shared/ReactFeatureFlags.js:229, 248, 251, 256, 244-245](), [packages/shared/forks/ReactFeatureFlags.www.js:44-47, 66-67]()
+**来源：** [packages/shared/ReactFeatureFlags.js:229, 248, 251, 256, 244-245](https://github.com/facebook/react/blob/main/packages/shared/ReactFeatureFlags.js:229, 248, 251, 256, 244-245), [packages/shared/forks/ReactFeatureFlags.www.js:44-47, 66-67](https://github.com/facebook/react/blob/main/packages/shared/forks/ReactFeatureFlags.www.js:44-47, 66-67)
 
 ### __VARIANT__ 宏
 
@@ -374,7 +374,7 @@ export const enableTransitionTracing: boolean = __VARIANT__;
 
 测试基础设施使用不同的 `__VARIANT__` 值多次运行测试，以确保两个代码路径都能正常工作。
 
-**来源：** [packages/shared/forks/ReactFeatureFlags.www-dynamic.js:16-24](), [packages/shared/forks/ReactFeatureFlags.native-fb-dynamic.js:20-29]()
+**来源：** [packages/shared/forks/ReactFeatureFlags.www-dynamic.js#L16-L24](https://github.com/facebook/react/blob/main/packages/shared/forks/ReactFeatureFlags.www-dynamic.js#L16-L24), [packages/shared/forks/ReactFeatureFlags.native-fb-dynamic.js#L20-L29](https://github.com/facebook/react/blob/main/packages/shared/forks/ReactFeatureFlags.native-fb-dynamic.js#L20-L29)
 
 ## Feature Flag 生命周期
 
@@ -401,7 +401,7 @@ stateDiagram-v2
     note right of Killswitch: Lines 18-26<br/>Emergency disable
 ```
 
-**来源：** [packages/shared/ReactFeatureFlags.js:10-259]()
+**来源：** [packages/shared/ReactFeatureFlags.js#L10-L259](https://github.com/facebook/react/blob/main/packages/shared/ReactFeatureFlags.js#L10-L259)
 
 ### 阶段定义
 
@@ -430,7 +430,7 @@ stateDiagram-v2
 用于在功能导致生产问题时快速禁用功能的标志：
 - `enableHydrationLaneScheduling`：如果 hydration 调度导致问题，可以禁用
 
-**来源：** [packages/shared/ReactFeatureFlags.js:64-152, 154-196, 38-62, 18-26]()
+**来源：** [packages/shared/ReactFeatureFlags.js:64-152, 154-196, 38-62, 18-26](https://github.com/facebook/react/blob/main/packages/shared/ReactFeatureFlags.js:64-152, 154-196, 38-62, 18-26)
 
 ## 与构建系统的集成
 
@@ -467,7 +467,7 @@ graph TB
     ClosureCompiler --> FinalBundle["Final Bundle<br/>Optimized code"]
 ```
 
-**来源：** [packages/shared/forks/ReactFeatureFlags.www.js:1-121](), [packages/shared/forks/ReactFeatureFlags.native-fb.js:1-92]()
+**来源：** [packages/shared/forks/ReactFeatureFlags.www.js#L1-L121](https://github.com/facebook/react/blob/main/packages/shared/forks/ReactFeatureFlags.www.js#L1-L121), [packages/shared/forks/ReactFeatureFlags.native-fb.js#L1-L92](https://github.com/facebook/react/blob/main/packages/shared/forks/ReactFeatureFlags.native-fb.js#L1-L92)
 
 ### 分叉选择示例
 
@@ -489,7 +489,7 @@ graph TB
 | Test renderer (native-fb) | `shared/forks/ReactFeatureFlags.test-renderer.native-fb.js` |
 | Test renderer (default) | `shared/forks/ReactFeatureFlags.test-renderer.js` |
 
-**来源：** [packages/shared/forks/ReactFeatureFlags.www.js:1](), [packages/shared/forks/ReactFeatureFlags.native-fb.js:1](), [packages/shared/forks/ReactFeatureFlags.native-oss.js:1](), [packages/shared/forks/ReactFeatureFlags.test-renderer.www.js:1](), [packages/shared/forks/ReactFeatureFlags.test-renderer.native-fb.js:1](), [packages/shared/forks/ReactFeatureFlags.test-renderer.js:1]()
+**来源：** [packages/shared/forks/ReactFeatureFlags.www.js:1](https://github.com/facebook/react/blob/main/packages/shared/forks/ReactFeatureFlags.www.js:1), [packages/shared/forks/ReactFeatureFlags.native-fb.js:1](https://github.com/facebook/react/blob/main/packages/shared/forks/ReactFeatureFlags.native-fb.js:1), [packages/shared/forks/ReactFeatureFlags.native-oss.js:1](https://github.com/facebook/react/blob/main/packages/shared/forks/ReactFeatureFlags.native-oss.js:1), [packages/shared/forks/ReactFeatureFlags.test-renderer.www.js:1](https://github.com/facebook/react/blob/main/packages/shared/forks/ReactFeatureFlags.test-renderer.www.js:1), [packages/shared/forks/ReactFeatureFlags.test-renderer.native-fb.js:1](https://github.com/facebook/react/blob/main/packages/shared/forks/ReactFeatureFlags.test-renderer.native-fb.js:1), [packages/shared/forks/ReactFeatureFlags.test-renderer.js:1](https://github.com/facebook/react/blob/main/packages/shared/forks/ReactFeatureFlags.test-renderer.js:1)
 
 ## 运行时代码中的标志使用
 
@@ -518,7 +518,7 @@ if (enableProfilerTimer) {
 
 经过 Babel 宏替换和 Closure Compiler 死代码消除后，只有活动的代码路径保留在最终的 bundle 中。
 
-**来源：** [packages/shared/ReactFeatureFlags.js:1-259]()
+**来源：** [packages/shared/ReactFeatureFlags.js#L1-L259](https://github.com/facebook/react/blob/main/packages/shared/ReactFeatureFlags.js#L1-L259)
 
 ## 特殊标志类别
 
@@ -535,7 +535,7 @@ if (enableProfilerTimer) {
 | `enableProfilerNestedUpdatePhase` | 区分更新与级联更新 | [251]() |
 | `enableUpdaterTracking` | 跟踪哪些 Fiber 调度渲染工作 | [256]() |
 
-**来源：** [packages/shared/ReactFeatureFlags.js:229, 235, 244-245, 248, 251, 256]()
+**来源：** [packages/shared/ReactFeatureFlags.js:229, 235, 244-245, 248, 251, 256](https://github.com/facebook/react/blob/main/packages/shared/ReactFeatureFlags.js:229, 235, 244-245, 248, 251, 256)
 
 ### 过期和超时标志
 
@@ -548,7 +548,7 @@ if (enableProfilerTimer) {
 | `syncLaneExpirationMs` | 250 | 同步 Lane 过期超时 | [139]() |
 | `transitionLaneExpirationMs` | 5000 | 过渡 Lane 过期超时 | [140]() |
 
-**来源：** [packages/shared/ReactFeatureFlags.js:137-140]()
+**来源：** [packages/shared/ReactFeatureFlags.js#L137-L140](https://github.com/facebook/react/blob/main/packages/shared/ReactFeatureFlags.js#L137-L140)
 
 ### 遗留 API 弃用标志
 
@@ -562,7 +562,7 @@ if (enableProfilerTimer) {
 | `enableLegacyHidden` | Slated for removal | 遗留隐藏子树 API（仅限 FB） | [111]() |
 | `enableLegacyFBSupport` | Slated for removal | 遗留 Primer 支持 | [61]() |
 
-**来源：** [packages/shared/ReactFeatureFlags.js:177, 181, 195, 111, 61]()
+**来源：** [packages/shared/ReactFeatureFlags.js:177, 181, 195, 111, 61](https://github.com/facebook/react/blob/main/packages/shared/ReactFeatureFlags.js:177, 181, 195, 111, 61)
 
 ## 标志命名约定
 
@@ -581,7 +581,7 @@ if (enableProfilerTimer) {
 - `*Ms`：毫秒超时（例如，`retryLaneExpirationMs`）
 - `*Limit`：数值限制（例如，`ownerStackLimit`）
 
-**来源：** [packages/shared/ReactFeatureFlags.js:1-259]()
+**来源：** [packages/shared/ReactFeatureFlags.js#L1-L259](https://github.com/facebook/react/blob/main/packages/shared/ReactFeatureFlags.js#L1-L259)
 
 ## 汇总表：所有 Feature Flags
 

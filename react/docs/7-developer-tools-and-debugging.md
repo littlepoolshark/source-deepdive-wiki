@@ -10,52 +10,52 @@
 - [.eslintrc.js](.eslintrc.js)
 - [fixtures/devtools/standalone/index.html](fixtures/devtools/standalone/index.html)
 - [package.json](package.json)
-- [packages/eslint-plugin-react-hooks/package.json](packages/eslint-plugin-react-hooks/package.json)
-- [packages/jest-react/package.json](packages/jest-react/package.json)
-- [packages/react-art/package.json](packages/react-art/package.json)
-- [packages/react-devtools-core/README.md](packages/react-devtools-core/README.md)
-- [packages/react-devtools-core/src/backend.js](packages/react-devtools-core/src/backend.js)
-- [packages/react-devtools-extensions/src/contentScripts/hookSettingsInjector.js](packages/react-devtools-extensions/src/contentScripts/hookSettingsInjector.js)
-- [packages/react-devtools-extensions/src/contentScripts/installHook.js](packages/react-devtools-extensions/src/contentScripts/installHook.js)
-- [packages/react-devtools-extensions/src/contentScripts/messages.js](packages/react-devtools-extensions/src/contentScripts/messages.js)
-- [packages/react-devtools-inline/src/backend.js](packages/react-devtools-inline/src/backend.js)
-- [packages/react-devtools-shared/src/__tests__/componentStacks-test.js](packages/react-devtools-shared/src/__tests__/componentStacks-test.js)
-- [packages/react-devtools-shared/src/__tests__/console-test.js](packages/react-devtools-shared/src/__tests__/console-test.js)
-- [packages/react-devtools-shared/src/__tests__/inspectedElement-test.js](packages/react-devtools-shared/src/__tests__/inspectedElement-test.js)
-- [packages/react-devtools-shared/src/__tests__/legacy/inspectElement-test.js](packages/react-devtools-shared/src/__tests__/legacy/inspectElement-test.js)
-- [packages/react-devtools-shared/src/__tests__/setupTests.js](packages/react-devtools-shared/src/__tests__/setupTests.js)
-- [packages/react-devtools-shared/src/__tests__/store-test.js](packages/react-devtools-shared/src/__tests__/store-test.js)
-- [packages/react-devtools-shared/src/attachRenderer.js](packages/react-devtools-shared/src/attachRenderer.js)
-- [packages/react-devtools-shared/src/backend/agent.js](packages/react-devtools-shared/src/backend/agent.js)
-- [packages/react-devtools-shared/src/backend/fiber/renderer.js](packages/react-devtools-shared/src/backend/fiber/renderer.js)
-- [packages/react-devtools-shared/src/backend/legacy/renderer.js](packages/react-devtools-shared/src/backend/legacy/renderer.js)
-- [packages/react-devtools-shared/src/backend/types.js](packages/react-devtools-shared/src/backend/types.js)
-- [packages/react-devtools-shared/src/backend/views/Highlighter/index.js](packages/react-devtools-shared/src/backend/views/Highlighter/index.js)
-- [packages/react-devtools-shared/src/backendAPI.js](packages/react-devtools-shared/src/backendAPI.js)
-- [packages/react-devtools-shared/src/bridge.js](packages/react-devtools-shared/src/bridge.js)
-- [packages/react-devtools-shared/src/devtools/store.js](packages/react-devtools-shared/src/devtools/store.js)
-- [packages/react-devtools-shared/src/devtools/utils.js](packages/react-devtools-shared/src/devtools/utils.js)
-- [packages/react-devtools-shared/src/devtools/views/Profiler/CommitTreeBuilder.js](packages/react-devtools-shared/src/devtools/views/Profiler/CommitTreeBuilder.js)
-- [packages/react-devtools-shared/src/devtools/views/utils.js](packages/react-devtools-shared/src/devtools/views/utils.js)
-- [packages/react-devtools-shared/src/frontend/types.js](packages/react-devtools-shared/src/frontend/types.js)
-- [packages/react-devtools-shared/src/hook.js](packages/react-devtools-shared/src/hook.js)
-- [packages/react-devtools-shared/src/hydration.js](packages/react-devtools-shared/src/hydration.js)
-- [packages/react-devtools-shared/src/utils.js](packages/react-devtools-shared/src/utils.js)
-- [packages/react-devtools-shell/src/app/ElementTypes/index.js](packages/react-devtools-shell/src/app/ElementTypes/index.js)
-- [packages/react-devtools-shell/src/app/InspectableElements/SimpleValues.js](packages/react-devtools-shell/src/app/InspectableElements/SimpleValues.js)
-- [packages/react-devtools-shell/src/app/InspectableElements/SymbolKeys.js](packages/react-devtools-shell/src/app/InspectableElements/SymbolKeys.js)
-- [packages/react-devtools-shell/src/app/InspectableElements/UnserializableProps.js](packages/react-devtools-shell/src/app/InspectableElements/UnserializableProps.js)
-- [packages/react-dom/package.json](packages/react-dom/package.json)
-- [packages/react-is/package.json](packages/react-is/package.json)
-- [packages/react-native-renderer/package.json](packages/react-native-renderer/package.json)
-- [packages/react-noop-renderer/package.json](packages/react-noop-renderer/package.json)
-- [packages/react-reconciler/package.json](packages/react-reconciler/package.json)
-- [packages/react-test-renderer/package.json](packages/react-test-renderer/package.json)
-- [packages/react/package.json](packages/react/package.json)
-- [packages/react/src/ReactForwardRef.js](packages/react/src/ReactForwardRef.js)
-- [packages/react/src/ReactMemo.js](packages/react/src/ReactMemo.js)
-- [packages/scheduler/package.json](packages/scheduler/package.json)
-- [packages/shared/ReactVersion.js](packages/shared/ReactVersion.js)
+- [packages/eslint-plugin-react-hooks/package.json](https://github.com/facebook/react/blob/main/packages/eslint-plugin-react-hooks/package.json)
+- [packages/jest-react/package.json](https://github.com/facebook/react/blob/main/packages/jest-react/package.json)
+- [packages/react-art/package.json](https://github.com/facebook/react/blob/main/packages/react-art/package.json)
+- [packages/react-devtools-core/README.md](https://github.com/facebook/react/blob/main/packages/react-devtools-core/README.md)
+- [packages/react-devtools-core/src/backend.js](https://github.com/facebook/react/blob/main/packages/react-devtools-core/src/backend.js)
+- [packages/react-devtools-extensions/src/contentScripts/hookSettingsInjector.js](https://github.com/facebook/react/blob/main/packages/react-devtools-extensions/src/contentScripts/hookSettingsInjector.js)
+- [packages/react-devtools-extensions/src/contentScripts/installHook.js](https://github.com/facebook/react/blob/main/packages/react-devtools-extensions/src/contentScripts/installHook.js)
+- [packages/react-devtools-extensions/src/contentScripts/messages.js](https://github.com/facebook/react/blob/main/packages/react-devtools-extensions/src/contentScripts/messages.js)
+- [packages/react-devtools-inline/src/backend.js](https://github.com/facebook/react/blob/main/packages/react-devtools-inline/src/backend.js)
+- [packages/react-devtools-shared/src/__tests__/componentStacks-test.js](https://github.com/facebook/react/blob/main/packages/react-devtools-shared/src/__tests__/componentStacks-test.js)
+- [packages/react-devtools-shared/src/__tests__/console-test.js](https://github.com/facebook/react/blob/main/packages/react-devtools-shared/src/__tests__/console-test.js)
+- [packages/react-devtools-shared/src/__tests__/inspectedElement-test.js](https://github.com/facebook/react/blob/main/packages/react-devtools-shared/src/__tests__/inspectedElement-test.js)
+- [packages/react-devtools-shared/src/__tests__/legacy/inspectElement-test.js](https://github.com/facebook/react/blob/main/packages/react-devtools-shared/src/__tests__/legacy/inspectElement-test.js)
+- [packages/react-devtools-shared/src/__tests__/setupTests.js](https://github.com/facebook/react/blob/main/packages/react-devtools-shared/src/__tests__/setupTests.js)
+- [packages/react-devtools-shared/src/__tests__/store-test.js](https://github.com/facebook/react/blob/main/packages/react-devtools-shared/src/__tests__/store-test.js)
+- [packages/react-devtools-shared/src/attachRenderer.js](https://github.com/facebook/react/blob/main/packages/react-devtools-shared/src/attachRenderer.js)
+- [packages/react-devtools-shared/src/backend/agent.js](https://github.com/facebook/react/blob/main/packages/react-devtools-shared/src/backend/agent.js)
+- [packages/react-devtools-shared/src/backend/fiber/renderer.js](https://github.com/facebook/react/blob/main/packages/react-devtools-shared/src/backend/fiber/renderer.js)
+- [packages/react-devtools-shared/src/backend/legacy/renderer.js](https://github.com/facebook/react/blob/main/packages/react-devtools-shared/src/backend/legacy/renderer.js)
+- [packages/react-devtools-shared/src/backend/types.js](https://github.com/facebook/react/blob/main/packages/react-devtools-shared/src/backend/types.js)
+- [packages/react-devtools-shared/src/backend/views/Highlighter/index.js](https://github.com/facebook/react/blob/main/packages/react-devtools-shared/src/backend/views/Highlighter/index.js)
+- [packages/react-devtools-shared/src/backendAPI.js](https://github.com/facebook/react/blob/main/packages/react-devtools-shared/src/backendAPI.js)
+- [packages/react-devtools-shared/src/bridge.js](https://github.com/facebook/react/blob/main/packages/react-devtools-shared/src/bridge.js)
+- [packages/react-devtools-shared/src/devtools/store.js](https://github.com/facebook/react/blob/main/packages/react-devtools-shared/src/devtools/store.js)
+- [packages/react-devtools-shared/src/devtools/utils.js](https://github.com/facebook/react/blob/main/packages/react-devtools-shared/src/devtools/utils.js)
+- [packages/react-devtools-shared/src/devtools/views/Profiler/CommitTreeBuilder.js](https://github.com/facebook/react/blob/main/packages/react-devtools-shared/src/devtools/views/Profiler/CommitTreeBuilder.js)
+- [packages/react-devtools-shared/src/devtools/views/utils.js](https://github.com/facebook/react/blob/main/packages/react-devtools-shared/src/devtools/views/utils.js)
+- [packages/react-devtools-shared/src/frontend/types.js](https://github.com/facebook/react/blob/main/packages/react-devtools-shared/src/frontend/types.js)
+- [packages/react-devtools-shared/src/hook.js](https://github.com/facebook/react/blob/main/packages/react-devtools-shared/src/hook.js)
+- [packages/react-devtools-shared/src/hydration.js](https://github.com/facebook/react/blob/main/packages/react-devtools-shared/src/hydration.js)
+- [packages/react-devtools-shared/src/utils.js](https://github.com/facebook/react/blob/main/packages/react-devtools-shared/src/utils.js)
+- [packages/react-devtools-shell/src/app/ElementTypes/index.js](https://github.com/facebook/react/blob/main/packages/react-devtools-shell/src/app/ElementTypes/index.js)
+- [packages/react-devtools-shell/src/app/InspectableElements/SimpleValues.js](https://github.com/facebook/react/blob/main/packages/react-devtools-shell/src/app/InspectableElements/SimpleValues.js)
+- [packages/react-devtools-shell/src/app/InspectableElements/SymbolKeys.js](https://github.com/facebook/react/blob/main/packages/react-devtools-shell/src/app/InspectableElements/SymbolKeys.js)
+- [packages/react-devtools-shell/src/app/InspectableElements/UnserializableProps.js](https://github.com/facebook/react/blob/main/packages/react-devtools-shell/src/app/InspectableElements/UnserializableProps.js)
+- [packages/react-dom/package.json](https://github.com/facebook/react/blob/main/packages/react-dom/package.json)
+- [packages/react-is/package.json](https://github.com/facebook/react/blob/main/packages/react-is/package.json)
+- [packages/react-native-renderer/package.json](https://github.com/facebook/react/blob/main/packages/react-native-renderer/package.json)
+- [packages/react-noop-renderer/package.json](https://github.com/facebook/react/blob/main/packages/react-noop-renderer/package.json)
+- [packages/react-reconciler/package.json](https://github.com/facebook/react/blob/main/packages/react-reconciler/package.json)
+- [packages/react-test-renderer/package.json](https://github.com/facebook/react/blob/main/packages/react-test-renderer/package.json)
+- [packages/react/package.json](https://github.com/facebook/react/blob/main/packages/react/package.json)
+- [packages/react/src/ReactForwardRef.js](https://github.com/facebook/react/blob/main/packages/react/src/ReactForwardRef.js)
+- [packages/react/src/ReactMemo.js](https://github.com/facebook/react/blob/main/packages/react/src/ReactMemo.js)
+- [packages/scheduler/package.json](https://github.com/facebook/react/blob/main/packages/scheduler/package.json)
+- [packages/shared/ReactVersion.js](https://github.com/facebook/react/blob/main/packages/shared/ReactVersion.js)
 - [scripts/flow/config/flowconfig](scripts/flow/config/flowconfig)
 - [scripts/flow/createFlowConfigs.js](scripts/flow/createFlowConfigs.js)
 - [scripts/flow/environment.js](scripts/flow/environment.js)
@@ -82,9 +82,9 @@ React 仓库提供了覆盖整个开发生命周期的开发者工具：
 React DevTools 由三部分组成：通过 `__REACT_DEVTOOLS_GLOBAL_HOOK__` 附加到 React renderer 的 backend、显示组件树和分析数据的 frontend，以及用于通信的版本化 bridge 协议。ESLint 插件使用 AST 分析来强制执行 Hook 使用模式。Console patching 基础设施通过组件堆栈增强错误消息。
 
 **来源：**
-- [packages/react-devtools-shared/src/hook.js:58-86]()
-- [packages/react-devtools-shared/src/backend/fiber/renderer.js:1006-1102]()
-- [packages/eslint-plugin-react-hooks/src/RulesOfHooks.ts:1-50]()
+- [packages/react-devtools-shared/src/hook.js#L58-L86](https://github.com/facebook/react/blob/main/packages/react-devtools-shared/src/hook.js#L58-L86)
+- [packages/react-devtools-shared/src/backend/fiber/renderer.js#L1006-L1102](https://github.com/facebook/react/blob/main/packages/react-devtools-shared/src/backend/fiber/renderer.js#L1006-L1102)
+- [packages/eslint-plugin-react-hooks/src/RulesOfHooks.ts#L1-L50](https://github.com/facebook/react/blob/main/packages/eslint-plugin-react-hooks/src/RulesOfHooks.ts#L1-L50)
 
 ## React DevTools
 
@@ -142,11 +142,11 @@ graph TB
 DevTools 支持三种部署模式：独立的 Electron 应用、浏览器扩展和内嵌式 UI。详细架构见第 7.1 页，分发详情见第 7.2 页。
 
 **来源：**
-- [packages/react-devtools-shared/src/hook.js:58-86]()
-- [packages/react-devtools-shared/src/backend/fiber/renderer.js:183-292]()
-- [packages/react-devtools-shared/src/devtools/store.js:143-348]()
-- [packages/react-devtools-shared/src/bridge.js:47-73]()
-- [packages/react-devtools/package.json:1-32]()
+- [packages/react-devtools-shared/src/hook.js#L58-L86](https://github.com/facebook/react/blob/main/packages/react-devtools-shared/src/hook.js#L58-L86)
+- [packages/react-devtools-shared/src/backend/fiber/renderer.js#L183-L292](https://github.com/facebook/react/blob/main/packages/react-devtools-shared/src/backend/fiber/renderer.js#L183-L292)
+- [packages/react-devtools-shared/src/devtools/store.js#L143-L348](https://github.com/facebook/react/blob/main/packages/react-devtools-shared/src/devtools/store.js#L143-L348)
+- [packages/react-devtools-shared/src/bridge.js#L47-L73](https://github.com/facebook/react/blob/main/packages/react-devtools-shared/src/bridge.js#L47-L73)
+- [packages/react-devtools/package.json#L1-L32](https://github.com/facebook/react/blob/main/packages/react-devtools/package.json#L1-L32)
 
 ## Console 集成与调试工具
 
@@ -226,10 +226,10 @@ React 19.2+ 发出 User Timing API 标记，出现在 Performance 面板中 [CHA
 - `supportsPerformanceTracks` 能力标志 [store.js:86]()
 
 **来源：**
-- [packages/react-devtools-shared/src/hook.js:110-267]()
-- [packages/react-devtools-shared/src/backend/fiber/renderer.js:133-138]()
-- [packages/react-devtools-shared/src/backend/fiber/renderer.js:1106-1119]()
-- [packages/react-devtools-shared/src/devtools/store.js:86]()
+- [packages/react-devtools-shared/src/hook.js#L110-L267](https://github.com/facebook/react/blob/main/packages/react-devtools-shared/src/hook.js#L110-L267)
+- [packages/react-devtools-shared/src/backend/fiber/renderer.js#L133-L138](https://github.com/facebook/react/blob/main/packages/react-devtools-shared/src/backend/fiber/renderer.js#L133-L138)
+- [packages/react-devtools-shared/src/backend/fiber/renderer.js#L1106-L1119](https://github.com/facebook/react/blob/main/packages/react-devtools-shared/src/backend/fiber/renderer.js#L1106-L1119)
+- [packages/react-devtools-shared/src/devtools/store.js:86](https://github.com/facebook/react/blob/main/packages/react-devtools-shared/src/devtools/store.js:86)
 - [CHANGELOG.md:12]()
 - [CHANGELOG.md:86]()
 
@@ -292,9 +292,9 @@ export default [reactHooks.configs.flat.recommended];
 选项包括用于自定义 hook 模式的 `additionalHooks` 和用于自动修复的 `enableDangerousAutofixThreshold`。详细实现见第 7.3 页。
 
 **来源：**
-- [packages/eslint-plugin-react-hooks/src/RulesOfHooks.ts:1-50]()
-- [packages/eslint-plugin-react-hooks/src/ExhaustiveDeps.ts:1-100]()
-- [packages/eslint-plugin-react-hooks/README.md:1-150]()
+- [packages/eslint-plugin-react-hooks/src/RulesOfHooks.ts#L1-L50](https://github.com/facebook/react/blob/main/packages/eslint-plugin-react-hooks/src/RulesOfHooks.ts#L1-L50)
+- [packages/eslint-plugin-react-hooks/src/ExhaustiveDeps.ts#L1-L100](https://github.com/facebook/react/blob/main/packages/eslint-plugin-react-hooks/src/ExhaustiveDeps.ts#L1-L100)
+- [packages/eslint-plugin-react-hooks/README.md#L1-L150](https://github.com/facebook/react/blob/main/packages/eslint-plugin-react-hooks/README.md#L1-L150)
 
 ## 构建与分发
 
@@ -312,9 +312,9 @@ DevTools 代码库组织为多个 npm 包：
 | `eslint-plugin-react-hooks` | ESLint 规则 | 插件导出 |
 
 **来源：**
-- [packages/react-devtools/package.json:1-32]()
-- [packages/react-devtools-core/package.json:1-38]()
-- [packages/react-devtools-inline/package.json:1-52]()
+- [packages/react-devtools/package.json#L1-L32](https://github.com/facebook/react/blob/main/packages/react-devtools/package.json#L1-L32)
+- [packages/react-devtools-core/package.json#L1-L38](https://github.com/facebook/react/blob/main/packages/react-devtools-core/package.json#L1-L38)
+- [packages/react-devtools-inline/package.json#L1-L52](https://github.com/facebook/react/blob/main/packages/react-devtools-inline/package.json#L1-L52)
 
 ### 构建流程
 
@@ -372,8 +372,8 @@ graph TB
 构建系统使用 Webpack DefinePlugin 内联环境特定常量，使用 BabelPlugin 进行 JSX 转换。
 
 **来源：**
-- [packages/react-devtools-core/package.json:17-25]()
-- [packages/react-devtools-inline/package.json:19-21]()
+- [packages/react-devtools-core/package.json#L17-L25](https://github.com/facebook/react/blob/main/packages/react-devtools-core/package.json#L17-L25)
+- [packages/react-devtools-inline/package.json#L19-L21](https://github.com/facebook/react/blob/main/packages/react-devtools-inline/package.json#L19-L21)
 
 ### 版本兼容性
 
@@ -388,5 +388,5 @@ DevTools 通过以下方式保持向后和向前兼容：
 - 较旧的 backend → 较新的 frontend：Frontend 使用嵌入的版本映射显示降级说明
 
 **来源：**
-- [packages/react-devtools-shared/src/bridge.js:47-73]()
-- [packages/react-devtools-shared/src/devtools/store.js:169-220]()
+- [packages/react-devtools-shared/src/bridge.js#L47-L73](https://github.com/facebook/react/blob/main/packages/react-devtools-shared/src/bridge.js#L47-L73)
+- [packages/react-devtools-shared/src/devtools/store.js#L169-L220](https://github.com/facebook/react/blob/main/packages/react-devtools-shared/src/devtools/store.js#L169-L220)
