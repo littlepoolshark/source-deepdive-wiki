@@ -58,3 +58,38 @@
 .mermaid .label-container {
   overflow: visible !important;
 }
+
+/* ============================================
+   GitHub Code Viewer - Drawer Push Layout
+   ============================================ */
+
+/* When drawer is open, push the main content to the left */
+body.github-viewer-drawer-open {
+  overflow: hidden;
+}
+
+body.github-viewer-drawer-open #app {
+  transition: margin-right 0.3s ease, width 0.3s ease;
+  margin-right: min(50vw, 800px);
+  width: calc(100% - min(50vw, 800px));
+  overflow-x: hidden;
+}
+
+/* Ensure the VitePress layout adapts */
+body.github-viewer-drawer-open .VPDoc {
+  transition: padding-right 0.3s ease;
+}
+
+body.github-viewer-drawer-open .VPContent {
+  transition: max-width 0.3s ease;
+}
+
+/* Mobile: full width drawer, hide main content */
+@media (max-width: 768px) {
+  body.github-viewer-drawer-open #app {
+    margin-right: 0;
+    width: 100%;
+    opacity: 0.3;
+    pointer-events: none;
+  }
+}

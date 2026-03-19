@@ -1,8 +1,14 @@
 <script setup lang="ts">
-import { computed, watch, onMounted, onUnmounted } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import { useGithubCode } from '../composables/useGithubCode'
 
 const { state, close, toggleMode, displayedCode, lineNumbers } = useGithubCode()
+
+// Drag state for modal
+const isDragging = ref(false)
+const dragOffset = ref({ x: 0, y: 0 })
+const modalPosition = ref({ x: 0, y: 0 })
+const modalRef = ref<HTMLElement | null>(null)
 
 const fileName = computed(() => {
   const parts = state.value.filePath.split('/')
@@ -25,21 +31,167 @@ const handleKeydown = (e: KeyboardEvent) => {
   }
 }
 
+// Drag handlers for modal
+const startDrag = (e: MouseEvent) => {
+  if (state.value.mode !== 'modal' || !modalRef.value) return
+  
+  isDragging.value = true
+  const rect = modalRef.value.getBoundingClientRect()
+  dragOffset.value = {
+    x: e.clientX - rect.left,
+    y: e.clientY - rect.top
+  }
+  
+  document.addEventListener('mousemove', onDrag)
+  document.addEventListener('mouseup', stopDrag)
+}
+
+const onDrag = (e: MouseEvent) => {
+  if (!isDragging.value) return
+  
+  const newX = e.clientX - dragOffset.value.x
+  const newY = e.clientY - dragOffset.value.y
+  
+  // Constrain to viewport
+  const maxX = window.innerWidth - (modalRef.value?.offsetWidth || 0)
+  const maxY = window.innerHeight - (modalRef.value?.offsetHeight || 0)
+  
+  modalPosition.value = {
+    x: Math.max(0, Math.min(newX, maxX)),
+    y: Math.max(0, Math.min(newY, maxY))
+  }
+}
+
+const stopDrag = () => {
+  isDragging.value = false
+  document.removeEventListener('mousemove', onDrag)
+  document.removeEventListener('mouseup', stopDrag)
+}
+
+const modalStyle = computed(() => {
+  if (state.value.mode !== 'modal') return {}
+  
+  if (modalPosition.value.x === 0 && modalPosition.value.y === 0) {
+    // Center position (initial)
+    return {
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)'
+    }
+  }
+  
+  return {
+    top: `${modalPosition.value.y}px`,
+    left: `${modalPosition.value.x}px`,
+    transform: 'none'
+  }
+})
+
+// Reset modal position when switching modes or reopening
+watch(() => [state.value.isOpen, state.value.mode], () => {
+  if (state.value.mode === 'modal') {
+    modalPosition.value = { x: 0, y: 0 }
+  }
+})
+
+// Handle body class for drawer mode (to push content)
+watch(() => state.value.isOpen, (isOpen) => {
+  if (isOpen && state.value.mode === 'drawer') {
+    document.body.classList.add('github-viewer-drawer-open')
+  } else {
+    document.body.classList.remove('github-viewer-drawer-open')
+  }
+})
+
+watch(() => state.value.mode, (mode) => {
+  if (state.value.isOpen) {
+    if (mode === 'drawer') {
+      document.body.classList.add('github-viewer-drawer-open')
+    } else {
+      document.body.classList.remove('github-viewer-drawer-open')
+    }
+  }
+})
+
 onMounted(() => {
   document.addEventListener('keydown', handleKeydown)
 })
 
 onUnmounted(() => {
   document.removeEventListener('keydown', handleKeydown)
+  document.body.classList.remove('github-viewer-drawer-open')
 })
 
-watch(() => state.value.isOpen, (isOpen) => {
-  if (isOpen) {
-    document.body.style.overflow = 'hidden'
-  } else {
-    document.body.style.overflow = ''
-  }
+// Syntax highlighting using simple token-based approach
+const highlightedLines = computed(() => {
+  if (!displayedCode.value) return []
+  
+  const lang = state.value.language
+  const lines = displayedCode.value.split('\n')
+  
+  return lines.map(line => highlightLine(line, lang))
 })
+
+function highlightLine(line: string, lang: string): string {
+  if (!line) return '&nbsp;'
+  
+  // Escape HTML first
+  let escaped = line
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+  
+  // JavaScript/TypeScript highlighting
+  if (['javascript', 'typescript', 'jsx', 'tsx', 'js', 'ts'].includes(lang)) {
+    // Comments
+    escaped = escaped.replace(
+      /(\/\/.*$)/gm,
+      '<span class="hl-comment">$1</span>'
+    )
+    escaped = escaped.replace(
+      /(\/\*[\s\S]*?\*\/)/g,
+      '<span class="hl-comment">$1</span>'
+    )
+    
+    // Strings
+    escaped = escaped.replace(
+      /(&apos;[^&apos;]*&apos;|&quot;[^&quot;]*&quot;|`[^`]*`)/g,
+      '<span class="hl-string">$1</span>'
+    )
+    escaped = escaped.replace(
+      /('[^']*'|"[^"]*")/g,
+      '<span class="hl-string">$1</span>'
+    )
+    
+    // Keywords
+    const keywords = [
+      'import', 'export', 'from', 'default', 'const', 'let', 'var',
+      'function', 'return', 'if', 'else', 'for', 'while', 'do',
+      'switch', 'case', 'break', 'continue', 'try', 'catch', 'finally',
+      'throw', 'new', 'class', 'extends', 'implements', 'interface',
+      'type', 'enum', 'async', 'await', 'yield', 'static', 'public',
+      'private', 'protected', 'readonly', 'abstract', 'as', 'is',
+      'typeof', 'instanceof', 'in', 'of', 'void', 'null', 'undefined',
+      'true', 'false', 'this', 'super', 'constructor', 'get', 'set'
+    ]
+    const keywordRegex = new RegExp(`\\b(${keywords.join('|')})\\b`, 'g')
+    escaped = escaped.replace(keywordRegex, '<span class="hl-keyword">$1</span>')
+    
+    // Numbers
+    escaped = escaped.replace(
+      /\b(\d+\.?\d*)\b/g,
+      '<span class="hl-number">$1</span>'
+    )
+    
+    // Function calls
+    escaped = escaped.replace(
+      /\b([a-zA-Z_$][a-zA-Z0-9_$]*)\s*\(/g,
+      '<span class="hl-function">$1</span>('
+    )
+  }
+  
+  return escaped
+}
 </script>
 
 <template>
@@ -57,17 +209,23 @@ watch(() => state.value.isOpen, (isOpen) => {
     <Transition :name="state.mode === 'drawer' ? 'slide' : 'zoom'">
       <div
         v-if="state.isOpen"
-        :class="['github-viewer', `github-viewer--${state.mode}`]"
+        ref="modalRef"
+        :class="['github-viewer', `github-viewer--${state.mode}`, { 'is-dragging': isDragging }]"
+        :style="state.mode === 'modal' ? modalStyle : {}"
       >
-        <!-- Header -->
-        <div class="github-viewer__header">
+        <!-- Header (draggable in modal mode) -->
+        <div 
+          class="github-viewer__header"
+          :class="{ 'github-viewer__header--draggable': state.mode === 'modal' }"
+          @mousedown="startDrag"
+        >
           <div class="github-viewer__title">
             <span class="github-viewer__icon">📄</span>
             <span class="github-viewer__filename">{{ fileName }}</span>
             <span v-if="lineRange" class="github-viewer__lines">{{ lineRange }}</span>
           </div>
           
-          <div class="github-viewer__actions">
+          <div class="github-viewer__actions" @mousedown.stop>
             <button
               class="github-viewer__btn github-viewer__btn--mode"
               @click="toggleMode"
@@ -114,12 +272,12 @@ watch(() => state.value.isOpen, (isOpen) => {
             </button>
           </div>
           
-          <!-- Code -->
+          <!-- Code with syntax highlighting -->
           <div v-else class="github-viewer__code">
             <table class="github-viewer__table">
               <tbody>
                 <tr
-                  v-for="(line, idx) in displayedCode.split('\n')"
+                  v-for="(line, idx) in highlightedLines"
                   :key="idx"
                   class="github-viewer__line"
                 >
@@ -127,7 +285,7 @@ watch(() => state.value.isOpen, (isOpen) => {
                     {{ lineNumbers[idx] }}
                   </td>
                   <td class="github-viewer__line-content">
-                    <pre><code>{{ line || ' ' }}</code></pre>
+                    <pre><code v-html="line"></code></pre>
                   </td>
                 </tr>
               </tbody>
@@ -157,6 +315,11 @@ watch(() => state.value.isOpen, (isOpen) => {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
+.github-viewer.is-dragging {
+  user-select: none;
+  cursor: grabbing;
+}
+
 /* Drawer Mode */
 .github-viewer--drawer {
   top: 0;
@@ -168,9 +331,6 @@ watch(() => state.value.isOpen, (isOpen) => {
 
 /* Modal Mode */
 .github-viewer--modal {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   width: min(80vw, 1000px);
   height: min(80vh, 800px);
   border-radius: 12px;
@@ -185,6 +345,14 @@ watch(() => state.value.isOpen, (isOpen) => {
   background: var(--vp-c-bg-soft);
   border-bottom: 1px solid var(--vp-c-border);
   flex-shrink: 0;
+}
+
+.github-viewer__header--draggable {
+  cursor: grab;
+}
+
+.github-viewer__header--draggable:active {
+  cursor: grabbing;
 }
 
 .github-viewer__title {
@@ -326,6 +494,49 @@ watch(() => state.value.isOpen, (isOpen) => {
 
 .github-viewer__line-content code {
   font-family: inherit;
+}
+
+/* Syntax Highlighting Colors */
+.github-viewer__line-content :deep(.hl-keyword) {
+  color: #cf222e;
+}
+
+.github-viewer__line-content :deep(.hl-string) {
+  color: #0a3069;
+}
+
+.github-viewer__line-content :deep(.hl-comment) {
+  color: #6e7781;
+  font-style: italic;
+}
+
+.github-viewer__line-content :deep(.hl-number) {
+  color: #0550ae;
+}
+
+.github-viewer__line-content :deep(.hl-function) {
+  color: #8250df;
+}
+
+/* Dark mode syntax highlighting */
+.dark .github-viewer__line-content :deep(.hl-keyword) {
+  color: #ff7b72;
+}
+
+.dark .github-viewer__line-content :deep(.hl-string) {
+  color: #a5d6ff;
+}
+
+.dark .github-viewer__line-content :deep(.hl-comment) {
+  color: #8b949e;
+}
+
+.dark .github-viewer__line-content :deep(.hl-number) {
+  color: #79c0ff;
+}
+
+.dark .github-viewer__line-content :deep(.hl-function) {
+  color: #d2a8ff;
 }
 
 /* Transitions */
